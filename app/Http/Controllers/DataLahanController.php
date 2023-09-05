@@ -19,6 +19,7 @@ class DataLahanController extends Controller
     }
     public function create()
     {
+        
         $data = [
             'title' => 'Form input data lahan',
         ];
