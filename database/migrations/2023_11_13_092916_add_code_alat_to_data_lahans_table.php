@@ -8,20 +8,24 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('petani')->after('active');
+        Schema::table('data_lahans', function (Blueprint $table) {
+            $table->string('code_alat')->after('id_user')->nullable();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('data_lahans', function (Blueprint $table) {
             //
         });
     }

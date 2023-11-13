@@ -1,6 +1,7 @@
 @extends('layouts.backend.app')
 
 @section('main-content')
+    @include('layouts.backend.alert')
     <div class="card">
         <div class="card-header">
             <h5>{{ $title }}</h5>
@@ -21,7 +22,7 @@
                     @forelse ($user as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->name . ' ' . $item->last_name }} </td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->tempat_lahir . ', ' . $item->tanggal_lahir }}</td>
                             <td>
@@ -34,7 +35,7 @@
                                         <button type="submit" class="btn btn-primary">Validasi</button>
                                     </form>
                                 @else
-                                    ini sudah di validasi
+                                    <span class="badge badge-primary">Tervalidasi</span>
                                 @endif
                             </td>
                             <td>

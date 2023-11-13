@@ -55,9 +55,9 @@
 
                                         <hr>
                                         <div class="form-group">
-                                            <button type="button" h class="btn btn-github btn-user btn-block">
+                                            <a href="{{ route('register') }}" class="btn btn-github btn-user btn-block">
                                                 {{ __('register') }}
-                                            </button>
+                                            </a>
                                         </div>
 
                                         {{-- <button type="button"
@@ -69,19 +69,15 @@
 
                                     <hr>
 
-                                    @if (Route::has('password.request'))
+                                    {{-- @if (Route::has('password.request'))
                                         <div class="text-center">
                                             <a class="small" href="{{ route('password.request') }}">
                                                 {{ __('Forgot Password?') }}
                                             </a>
                                         </div>
-                                    @endif
+                                    @endif --}}
 
-                                    @if (Route::has('register'))
-                                        <div class="text-center">
-                                            <a class="small" href="{{ route('register') }}">{{ __('Register!') }}</a>
-                                        </div>
-                                    @endif
+
                                 </div>
                             </div>
                         </div>

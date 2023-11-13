@@ -58,23 +58,7 @@
                                                 value="{{ old('tanggal_lahir') }}" required>
                                         </div>
 
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" name="luas_lahan"
-                                                placeholder="{{ __('luas lahan') }}" value="{{ old('luas_lahan') }}"
-                                                required>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" name="nama_lahan"
-                                                placeholder="{{ __('nama lahan') }}" value="{{ old('nama_lahan') }}"
-                                                required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" name="data_lahan"
-                                                placeholder="{{ __('data lahan') }}" value="{{ old('data_lahan') }}"
-                                                required>
-                                        </div>
 
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" name="password"

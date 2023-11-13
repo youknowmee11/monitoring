@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class RegisterController extends Controller
 {
 
-   
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -57,12 +58,9 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'tempat_lahir' => ['required', 'string', 'max:255'],
             'tanggal_lahir' => ['required', 'string', 'max:255'],
-            'luas_lahan' => ['required', 'string', 'max:255'],
-            'nama_lahan' => ['required', 'string', 'max:255'],
-            'data_lahan' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
 
-            
+
         ]);
     }
 
@@ -80,9 +78,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'tempat_lahir' => $data['tempat_lahir'],
             'tanggal_lahir' => $data['tanggal_lahir'],
-            'luas_lahan' => $data['luas_lahan'],
-            'nama_lahan' => $data['nama_lahan'],
-            'data_lahan' => $data['data_lahan'],
             'password' => $data['password'],
         ]);
     }
@@ -90,8 +85,8 @@ class RegisterController extends Controller
     // {
     //     return array_merge($request->only($this->username(), 'password'), ['active' => 1]);
     // }
-   
-    
-      
-  
+
+
+
+
 }

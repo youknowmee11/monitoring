@@ -8,23 +8,34 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form action="" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label>Nama</label>
+                        <input class="form-control" type="text" name="name" placeholder="name"
+                            value="{{ $item->name }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Nama akhir</label>
+                        <input class="form-control" type="text" name="last_name" placeholder="last name"
+                            value="{{ $item->last_name }}" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Email</label>
+                        <input class="form-control" type="text" name="email" placeholder="email"
+                            value="{{ $item->email }}" required>
+                    </div>
 
-            <input class="modal-body" type="text" value="{{ $item->name }}">
-            <input class="modal-body" type="text" value="{{ $item->email }}">
-            <input class="modal-body" type="text" value="{{ $item->last_name }}">
-            <input class="modal-body" type="text" value="{{ $item->tempat_lahir }}">
-            <input class="modal-body" type="text" value="{{ $item->tanggal_lahir }}">
-            <input class="modal-body" type="text" value="{{ $item->luas_lahan }}">
-            <input class="modal-body" type="text" value="{{ $item->nama_lahan }}">
-            <input class="modal-body" type="text" value="{{ $item->data_lahan }}">
-
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
+
     </div>
 </div>
 

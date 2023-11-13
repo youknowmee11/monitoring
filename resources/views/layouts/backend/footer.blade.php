@@ -1,7 +1,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; AldrianSembiring {{ now()->year }}</span>
+            <span>Copyright &copy; Monitoring pH {{ now()->year }}</span>
         </div>
     </div>
 </footer>

@@ -14,11 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('tempat_lahir')->after('email')->nullable();
             $table->date('tanggal_lahir')->after('tempat_lahir')->nullable();
-            $table->string('luas_lahan')->after('tanggal_lahir');
-            $table->string('nama_lahan')->after('luas_lahan');
-            $table->string('data_lahan')->after('nama_lahan');
-            $table->boolean('active')->after('data_lahan')->default('0');
-
+            $table->boolean('active')->after('tanggal_lahir')->default('0');
         });
     }
 

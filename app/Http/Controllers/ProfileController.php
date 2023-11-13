@@ -22,26 +22,26 @@ class ProfileController extends Controller
     {
         $data = [
             'title' => 'Data admin',
-            'user'=> User::where('role','admin')->get(),
+            'user' => User::where('role', 'admin')->get(),
         ];
-        return view('pages.admin.user.index',$data);
+        return view('pages.admin.user.index', $data);
     }
 
     public function petani()
     {
         $data = [
             'title' => 'Data Petani',
-            'user'=> User::where('role','user')->get(),
+            'user' => User::where('role', 'petani')->get(),
         ];
-        return view('pages.admin.user.petani',$data);
+        return view('pages.admin.user.petani', $data);
     }
     public function tambah_admin()
     {
         $data = [
             'title' => 'Tambah Admin',
-            'user'=> User::where('role','user')->get(),
+            'user' => User::where('role', 'user')->get(),
         ];
-        return view('pages.admin.user.tambah_admin',$data);
+        return view('pages.admin.user.tambah_admin', $data);
     }
 
     public function update(Request $request)
@@ -78,8 +78,8 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'password'=>'required',
-            'email'=>'required',
+            'password' => 'required',
+            'email' => 'required',
         ]);
 
 
@@ -94,7 +94,7 @@ class ProfileController extends Controller
 
         return redirect()->back()->withSuccess('Profile updated successfully.');
     }
-    public function validasi(Request $request,$id)
+    public function validasi(Request $request, $id)
     {
         $user = User::findOrFail($id);
         $user->active = $request->active;
@@ -107,5 +107,4 @@ class ProfileController extends Controller
         $user->delete();
         return redirect()->back()->withSuccess('Profile deleted.');
     }
-    
 }

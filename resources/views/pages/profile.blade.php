@@ -4,24 +4,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ __('Profile') }}</h1>
 
-    @if (session('success'))
-        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="alert alert-danger border-left-danger" role="alert">
-            <ul class="pl-4 my-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('layouts.backend.alert')
 
     <div class="row">
 
@@ -128,8 +111,8 @@
                                 <div class="col-lg-4">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="new_password">New password</label>
-                                        <input type="password" id="new_password" class="form-control"
-                                            name="new_password" placeholder="New password">
+                                        <input type="password" id="new_password" class="form-control" name="new_password"
+                                            placeholder="New password">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -159,5 +142,4 @@
         </div>
 
     </div>
-
 @endsection

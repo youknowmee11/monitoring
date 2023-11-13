@@ -19,17 +19,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider">
-    @if (Auth::user()->role == 'user')
-        <!-- Nav Item - About -->
-        <li class="nav-item {{ Nav::isRoute('data_lahan.create') }}">
-            <a class="nav-link" href="{{ route('data_lahan.create') }}">
-                <i class="fas fa-fw fa-book"></i>
-                <span>{{ __('Informasi Lahan') }}</span>
-            </a>
-        </li>
-    @endif
-
-    @if (Auth::user()->role == 'admin')
+    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petani')
         <div class="sidebar-heading">
             {{ __('Data Lahan') }}
         </div>
@@ -40,6 +30,9 @@
                 <span>{{ __('Data Lahan') }}</span>
             </a>
         </li>
+    @endif
+
+    @if (Auth::user()->role == 'admin')
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
             {{ __('Pengguna') }}
