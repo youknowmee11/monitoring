@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alat;
+use App\Models\DataLahan;
+use App\Models\JenisJagung;
+use App\Models\Notifikasi;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,13 +29,27 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::count();
+        $petani = User::where('role', 'petani')->count();
+        $lahan_petani = DataLahan::sum('luas_lahan');
+        $alat = Alat::count();
+        $JenisJagung = JenisJagung::count();
 
         $widget = [
-            'users' => $users,
-            //...
+            'petani' => $petani,
+            'alat' => $alat,
+            'jenis_jagung' => $JenisJagung,
+            'lahan_petani' => $lahan_petani,
+            'lahan' => DataLahan::where('id_user', Auth::user()->id)->get(),
         ];
 
         return view('pages.home', compact('widget'));
+    }
+    public function notifikasi()
+    {
+        $data = [
+            'title' => 'Semua Notifikasi',
+            'notifikasi' => Notifikasi::where('id_user', Auth::user()->id)->get(),
+        ];
+        return view('pages.notifikasi', $data);
     }
 }

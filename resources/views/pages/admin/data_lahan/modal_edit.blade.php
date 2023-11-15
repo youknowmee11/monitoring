@@ -1,37 +1,58 @@
-<div class="modal fade" id="edit-{{ $data_lahan->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="edit-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group mb-3">
-                    <label>Nama Lahan</label>
-                    <input class="form-control" type="text" name="nama_lahan" placeholder="nama_lahan"
-                        value="{{ $data_lahan->nama_lahan }}">
+            <form action="{{ route('data_lahan.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Ubah Data') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="form-group mb-3">
-                    <label>Data Lahan</label>
-                    <input class="form-control" type="text" name="data_lahan" placeholder="data_lahan"
-                        value="{{ $data_lahan->data_lahan }}">
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label>Code Alat</label>
+                        <input class="form-control" type="text" name="code_alat" placeholder="Code Alat" required
+                            value="{{ $item->code_alat }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Nama Lahan </label>
+                        <input class="form-control" type="text" name="nama_lahan" placeholder="Nama Lahan" required
+                            value="{{ $item->nama_lahan }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Luas Lahan (Ha)</label>
+                        <input class="form-control" type="number" name="luas_lahan" placeholder="Luas Lahan" required
+                            value="{{ $item->luas_lahan }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Data Lahan</label>
+                        <input class="form-control" type="text" name="data_lahan" placeholder="Data Lahan" required
+                            value="{{ $item->data_lahan }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Data Jenis Jagung</label>
+                        <select name="id_jenis_jagung" class="form-control">
+                            @foreach (App\Models\JenisJagung::latest()->get() as $list)
+                                <option value="{{ $list->id }}" @if ($item->id_jenis_jagung == $list->id) selected @endif>
+                                    {{ $list->jenis_jagung }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Data Terakhir Tanam</label>
+                        <input class="form-control" type="date" name="terakhir_tanam"
+                            value="{{ $item->terakhir_tanam }}">
+                    </div>
+
                 </div>
-                <div class="form-group mb-3">
-                    <label>luas Lahan</label>
-                    <input class="form-control" type="text" name="luas_lahan" placeholder="luas_lahan"
-                        value="{{ $data_lahan->luas_lahan }}">
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                 </div>
-            </div>
-
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-
-            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
             <div class="my-2">
                 <a href="#" class="btn btn-primary  " data-toggle="modal" data-target="#create">tambah admin </a>
             </div>
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="datatable">
                 <thead>
                     <tr>
                         <th>#</th>

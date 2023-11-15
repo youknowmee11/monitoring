@@ -7,7 +7,7 @@
             <h5>{{ $title }}</h5>
         </div>
         <div class="card-body">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="datatable">
                 <thead>
                     <tr>
                         <th>#</th>

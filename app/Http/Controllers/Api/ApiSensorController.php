@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\DataLahan;
+use App\Models\Notifikasi;
 use App\Models\Sensor;
 use Illuminate\Http\Response;
 use Illuminate\Database\QueryException;
@@ -39,6 +41,7 @@ class ApiSensorController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
+                'code_alat' => 'required',
                 'ph1' => 'required',
                 'ph2' => 'required',
                 'salinitas1' => 'required',
@@ -48,6 +51,51 @@ class ApiSensorController extends Controller
                 return response()->json(['error' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
             Sensor::create($request->all());
+
+            $ph1 = number_format($request->ph1, 1);
+            $ph2 = number_format($request->ph2, 1);
+
+            $previousData = Sensor::where('code_alat', $request->code_alat)->latest()->first();
+
+            $previousPh1 = number_format($previousData->ph1, 1);
+            $previousPh2 = number_format($previousData->ph2, 1);
+
+            $id_petani = DataLahan::where('code_alat', $request->code_alat)->first()->id_user;
+
+            // if ($ph1 != $previousPh1 || $ph2 != $previousPh2) {
+            if (($ph1 >= 5.6 && $ph2 >= 5.6) && ($ph2 <= 6.2 && $ph2 <= 6.2)) {
+                $notif = new Notifikasi();
+                $notif->id_user = $id_petani;
+                $notif->message = 'Nutrisi tanah seimbang';
+                $notif->type = 'primary';
+                $notif->url = '/data_lahan';
+                $notif->save();
+
+                ob_flush();
+                flush();
+            } elseif ($ph1 < 5.6 && $ph2 < 5.6) {
+                $notif = new Notifikasi();
+                $notif->id_user = $id_petani;
+                $notif->message = 'Nutrisi Tanah kehilangan kalsium(ca), magnesium(mg)';
+                $notif->type = 'danger';
+                $notif->url = '/data_lahan';
+                $notif->save();
+
+                ob_flush();
+                flush();
+            } elseif ($ph1 > 6.2 && $ph2 > 6.2) {
+                $notif = new Notifikasi();
+                $notif->id_user = $id_petani;
+                $notif->message = 'Nutrisi Tanah kehilangan fosfor (p), mangan (mn)';
+                $notif->type = 'danger';
+                $notif->url = '/data_lahan';
+                $notif->save();
+
+                ob_flush();
+                flush();
+            }
+            // }
+
             $response = [
                 'Success' => 'New Data Created',
             ];
@@ -93,6 +141,7 @@ class ApiSensorController extends Controller
         try {
             $sensor = Sensor::findOrFail($id);
             $validator = Validator::make($request->all(), [
+                'code_alat' => 'required',
                 'ph1' => 'required',
                 'ph2' => 'required',
                 'salinitas1' => 'required',

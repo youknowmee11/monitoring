@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -24,13 +24,13 @@
                     </div>
                     <div class="form-group mb-3">
                         <label>Email</label>
-                        <input class="form-control" type="text" name="email" placeholder="email"
+                        <input class="form-control" type="email" name="email" placeholder="email"
                             value="{{ $item->email }}" required>
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                 </div>
             </form>

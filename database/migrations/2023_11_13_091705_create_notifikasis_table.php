@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('message');
             $table->enum('type', ['primary', 'danger', 'warning', 'success']);
             $table->string('url');
-            $table->timestamp('read_at');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users');

@@ -17,22 +17,31 @@
             <span>{{ __('Dashboard') }}</span></a>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petani')
-        <div class="sidebar-heading">
-            {{ __('Data Lahan') }}
-        </div>
-        <!-- Nav Item - About -->
-        <li class="nav-item {{ Nav::isRoute('data_lahan') }}">
-            <a class="nav-link" href="{{ route('data_lahan') }}">
-                <i class="fas fa-fw fa-book"></i>
-                <span>{{ __('Data Lahan') }}</span>
-            </a>
-        </li>
-    @endif
+
+
 
     @if (Auth::user()->role == 'admin')
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+            {{ __('Jenis Jagung') }}
+        </div>
+        <!-- Nav Item - About -->
+        <li class="nav-item {{ Nav::isRoute('jenis_jagung') }}">
+            <a class="nav-link" href="{{ route('jenis_jagung') }}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>{{ __('Data Jenis Jagung') }}</span>
+            </a>
+        </li>
+        <div class="sidebar-heading">
+            {{ __('Alat') }}
+        </div>
+        <!-- Nav Item - About -->
+        <li class="nav-item {{ Nav::isRoute('alat') }}">
+            <a class="nav-link" href="{{ route('alat') }}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>{{ __('Data Alat') }}</span>
+            </a>
+        </li>
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
             {{ __('Pengguna') }}
@@ -48,6 +57,30 @@
             <a class="nav-link" href="{{ route('petani') }}">
                 <i class="fas fa-fw fa-hands-helping"></i>
                 <span>{{ __('Data Petani') }}</span>
+            </a>
+        </li>
+    @endif
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petani')
+        <div class="sidebar-heading">
+            {{ __('Data Lahan') }}
+        </div>
+        <!-- Nav Item - About -->
+        <li class="nav-item {{ Nav::isRoute('data_lahan') }}">
+            <a class="nav-link" href="{{ route('data_lahan') }}">
+                <i class="fas fa-fw fa-book"></i>
+                <span>{{ __('Data Lahan') }}</span>
+            </a>
+        </li>
+        <div class="sidebar-heading">
+            {{ __('Laporan') }}
+        </div>
+        <!-- Nav Item - About -->
+        <li class="nav-item {{ Nav::isRoute('laporan.sensor') }}">
+            <a class="nav-link" href="{{ route('laporan.sensor') }}">
+                <i class="fas fa-fw fa-book"></i>
+                <span>{{ __('Data Sensor') }}</span>
             </a>
         </li>
     @endif
