@@ -44,7 +44,7 @@
             // Fungsi untuk mengupdate data sensor
             function updateSensorData() {
                 // Menggunakan fetch untuk mendapatkan data terbaru dari API
-                fetch('http://127.0.0.1:8000/api/sensor')
+                fetch('https://mon-ph.mixdev.id/api/sensor')
                     .then(response => response.json())
                     .then(data => {
                         // Sort data berdasarkan created_at dalam urutan descending
@@ -74,7 +74,7 @@
             // Fungsi untuk mendapatkan data terbaru
             function getLatestData() {
                 // Menggunakan fetch untuk mendapatkan data terbaru dari API
-                return fetch('http://127.0.0.1:8000/api/sensor')
+                return fetch('https://mon-ph.mixdev.id/api/sensor')
                     .then(response => response.json())
                     .then(data => {
                         // Sort data berdasarkan created_at dalam urutan descending
@@ -116,7 +116,7 @@
 
             function updateChart() {
                 // Menggunakan fetch untuk mendapatkan data dari API
-                fetch('http://127.0.0.1:8000/api/sensor')
+                fetch('https://mon-ph.mixdev.id/api/sensor')
                     .then(response => response.json())
                     .then(data => {
                         // Filter data berdasarkan code_alat
