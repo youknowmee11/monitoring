@@ -21,9 +21,8 @@
                         <th>Luas Lahan</th>
                         <th>Jenis Jagung</th>
                         <th>Terakhir Tanam</th>
-                        @if (Auth::user()->role == 'petani')
-                            <th>Aksi</th>
-                        @endif
+                        <th>Aksi</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -35,14 +34,18 @@
                             <td>{{ $item->luas_lahan }} Ha</td>
                             <td>{{ $item->jenis_jagung->jenis_jagung }}</td>
                             <td>{{ $item->terakhir_tanam }}</td>
-                            @if (Auth::user()->role == 'petani')
-                                <td>
+                            <td>
+                                <a href="#" class="btn btn-primary  " data-toggle="modal"
+                                    data-target="#mapModal{{ $item->id }}">Peta
+                                </a>
+                                @if (Auth::user()->role == 'petani')
                                     <a href="#" class="btn btn-warning  " data-toggle="modal"
                                         data-target="#edit-{{ $item->id }}">Edit
                                     </a>
-                                </td>
-                                @include('pages.admin.data_lahan.modal_edit')
-                            @endif
+                                    @include('pages.admin.data_lahan.modal_edit')
+                                @endif
+                            </td>
+                            @include('pages.admin.data_lahan.modal_map')
                         </tr>
                     @empty
                         <tr>

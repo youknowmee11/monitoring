@@ -11,7 +11,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">{{ __('Register') }}</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">{{ __('Daftar') }}</h1>
                                     </div>
 
                                     @if ($errors->any())
@@ -29,26 +29,25 @@
 
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" name="name"
-                                                placeholder="{{ __('Name') }}" value="{{ old('name') }}" required
+                                                placeholder="{{ __('Nama Depan') }}" value="{{ old('name') }}" required
                                                 autofocus>
                                         </div>
 
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" name="last_name"
-                                                placeholder="{{ __('last name') }}" value="{{ old('last_name') }}" required
-                                                autofocus>
+                                                placeholder="{{ __('Nama Belakang') }}" value="{{ old('last_name') }}"
+                                                required autofocus>
                                         </div>
 
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" name="email"
-                                                placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}"
-                                                required>
+                                                placeholder="{{ __('Alamat Email') }}" value="{{ old('email') }}" required>
                                         </div>
 
 
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" name="tempat_lahir"
-                                                placeholder="{{ __('tempat lahir') }}" value="{{ old('tempat_lahir') }}"
+                                                placeholder="{{ __('Tempat lahir') }}" value="{{ old('tempat_lahir') }}"
                                                 required>
                                         </div>
 
@@ -67,13 +66,13 @@
 
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                name="password_confirmation" placeholder="{{ __('Confirm Password') }}"
+                                                name="password_confirmation" placeholder="{{ __('Konfirmasi Password') }}"
                                                 required>
                                         </div>
 
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary btn-user btn-block">
-                                                {{ __('login') }}
+                                                {{ __('Daftar') }}
                                             </button>
                                         </div>
                                     </form>
@@ -82,7 +81,7 @@
 
                                     <div class="text-center">
                                         <a class="small" href="{{ route('login') }}">
-                                            {{ __('Already have an account? Login!') }}
+                                            {{ __('Sudah Memiliki Akun? Login!') }}
                                         </a>
                                     </div>
                                 </div>

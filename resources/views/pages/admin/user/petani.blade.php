@@ -39,6 +39,9 @@
                                 @endif
                             </td>
                             <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#lahan-{{ $item->id }}">Lahan
+                                </button>
                                 <button type="button" class="btn btn-warning" data-toggle="modal"
                                     data-target="#edit-{{ $item->id }}">Edit
                                 </button>
@@ -46,6 +49,7 @@
                                     data-target="#delete-{{ $item->id }}">Hapus
                                 </button>
                                 @include('pages.admin.user.modal')
+                                @include('pages.admin.user.modal_lahan')
 
                             </td>
                         </tr>

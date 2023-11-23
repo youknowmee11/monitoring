@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -52,17 +53,27 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'tempat_lahir' => ['required', 'string', 'max:255'],
-            'tanggal_lahir' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-
-
-        ]);
+        return Validator::make(
+            $data,
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'tempat_lahir' => ['required', 'string', 'max:255'],
+                'tanggal_lahir' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ],
+            [
+                'name.required' => 'Nama Harus diisi',
+                'last_name.required' => 'Nama Belakang Harus diisi',
+                'email.required' => 'Email Harus diisi',
+                'tempat_lahir.required' => 'Tempat Lahir Harus diisi',
+                'tanggal_lahir.required' => 'Tanggal Lahir Harus diisi',
+                'password.required' => 'Password Harus diisi',
+            ]
+        );
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -85,8 +96,5 @@ class RegisterController extends Controller
     // {
     //     return array_merge($request->only($this->username(), 'password'), ['active' => 1]);
     // }
-
-
-
 
 }

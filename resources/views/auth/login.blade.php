@@ -29,8 +29,8 @@
 
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" name="email"
-                                                placeholder="{{ __('E-Mail Address') }}" value="{{ old('email') }}"
-                                                required autofocus>
+                                                placeholder="{{ __('Alamat Email') }}" value="{{ old('email') }}" required
+                                                autofocus>
                                         </div>
 
                                         <div class="form-group">
@@ -43,7 +43,7 @@
                                                 <input type="checkbox" class="custom-control-input" name="remember"
                                                     id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                 <label class="custom-control-label"
-                                                    for="remember">{{ __('Remember Me') }}</label>
+                                                    for="remember">{{ __('Ingat Login') }}</label>
                                             </div>
                                         </div>
 
@@ -56,7 +56,7 @@
                                         <hr>
                                         <div class="form-group">
                                             <a href="{{ route('register') }}" class="btn btn-github btn-user btn-block">
-                                                {{ __('register') }}
+                                                {{ __('Daftar akun') }}
                                             </a>
                                         </div>
 
