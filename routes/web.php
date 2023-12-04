@@ -19,19 +19,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
     // Notifikasi
     Route::put('/read_notif/{id}', [NotifikasiController::class, 'read'])->name('read_notif');
     Route::put('/read_all/{id}', [NotifikasiController::class, 'read_all'])->name('read_all');
     Route::get('/notifikasi', [HomeController::class, 'notifikasi'])->name('notifikasi');
 
-    Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::put('/profile', 'ProfileController@update')->name('profile.update');
