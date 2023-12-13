@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataLahan;
 use App\Models\JenisJagung;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class JenisJagungController extends Controller
@@ -41,8 +44,18 @@ class JenisJagungController extends Controller
     }
     public function destroy($id)
     {
-        $JenisJagung = JenisJagung::find($id);
-        $JenisJagung->delete();
-        return redirect()->back()->withSuccess('Alat berhasil dihapus.');
+        try {
+
+            $JenisJagung = JenisJagung::find($id);
+
+            if (DataLahan::where('id_jenis_jagung', $JenisJagung->id)->count() > 0) {
+                return redirect()->back()->withErrors('Tidak dapat menghapus jenis jagung karena terdapat data lahan yang menggunakan jenis jagung ini.');
+            } else {
+                return redirect()->back()->withSuccess('Alat berhasil dihapus.');
+                $JenisJagung->delete();
+            }
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
+        }
     }
 }

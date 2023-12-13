@@ -22,11 +22,10 @@
                         <th>Jenis Jagung</th>
                         <th>Terakhir Tanam</th>
                         <th>Aksi</th>
-
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($lahan as $item)
+                    @foreach ($lahan as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->code_alat }}</td>
@@ -47,11 +46,7 @@
                             </td>
                             @include('pages.admin.data_lahan.modal_map')
                         </tr>
-                    @empty
-                        <tr>
-                            <td>Data tidak ditemukan</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

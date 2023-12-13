@@ -35,7 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($sensor as $item)
+                    @foreach ($sensor as $item)
                         @php
                             $lahan = App\Models\DataLahan::where('code_alat', $item->code_alat)->first();
                             $ph1 = number_format($item->ph1, 1);
@@ -72,11 +72,7 @@
                                 @endif
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td>Data tidak ditemukan</td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -14,7 +14,7 @@ class LaporanController extends Controller
     {
         if (Auth::user()->role == 'petani') {
 
-            $code_alat = DataLahan::where('id_user', Auth::user()->id)->first()->code_alat;
+            $code_alat = DataLahan::where('id_user', Auth::user()->id)->first()->code_alat ?? null;
         }
         $data = [
             'title' => 'Riwayat Data Sensor',
