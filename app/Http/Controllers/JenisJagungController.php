@@ -20,27 +20,34 @@ class JenisJagungController extends Controller
     }
     public function store(Request $request)
     {
+        try {
+            $request->validate([
+                'jenis_jagung' => 'required|string|max:255',
+            ]);
 
-        $request->validate([
-            'jenis_jagung' => 'required|string|max:255',
-        ]);
+            $jenis_jagung = new JenisJagung();
+            $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
+            $jenis_jagung->save();
 
-        $jenis_jagung = new JenisJagung();
-        $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
-        $jenis_jagung->save();
-
-        return redirect()->back()->withSuccess('Alat berhasil didaftarkan.');
+            return redirect()->back()->withSuccess('Alat berhasil didaftarkan.');
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
+        }
     }
     public function update(Request $request, $id)
     {
-        $$request->validate([
-            'jenis_jagung' => 'required|string|max:255',
-        ]);
-        $jenis_jagung = JenisJagung::find($id);
-        $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
-        $jenis_jagung->save();
+        try {
+            $request->validate([
+                'jenis_jagung' => 'required|string|max:255',
+            ]);
+            $jenis_jagung = JenisJagung::find($id);
+            $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
+            $jenis_jagung->save();
 
-        return redirect()->back()->withSuccess('Alat berhasil diupdate.');
+            return redirect()->back()->withSuccess('Alat berhasil diupdate.');
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
+        }
     }
     public function destroy($id)
     {

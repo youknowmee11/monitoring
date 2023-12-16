@@ -7,6 +7,7 @@ use App\Models\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Database\QueryException;
 
 class LaporanController extends Controller
 {
@@ -24,21 +25,24 @@ class LaporanController extends Controller
     }
     public function cetak_sensor(Request $request)
     {
+        try {
+            $sensor = Sensor::where('created_at', '>=', $request->from_date)
+                ->where('created_at', '<=', $request->to_date)
+                ->get();
 
-        $sensor = Sensor::where('created_at', '>=', $request->from_date)
-            ->where('created_at', '<=', $request->to_date)
-            ->get();
-
-        if ($sensor->isEmpty()) {
-            return redirect()->back()->with('danger', 'Data tidak tersedia');
+            if ($sensor->isEmpty()) {
+                return redirect()->back()->with('danger', 'Data tidak tersedia');
+            }
+            $pdf = \PDF::loadview('pages/admin/laporan/pdf/pdf_sensor', [
+                'data' => $sensor,
+                'title' => 'Laporan Data Sensor Lahan',
+                'from_date' => $request->from_date,
+                'to_date' => $request->to_date,
+            ])
+                ->setPaper('a4', 'landscape');
+            return $pdf->stream('Laporan_lahan_' . $request->from_date . '-' . $request->to_date . '.pdf');
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
-        $pdf = \PDF::loadview('pages/admin/laporan/pdf/pdf_sensor', [
-            'data' => $sensor,
-            'title' => 'Laporan Data Sensor Lahan',
-            'from_date' => $request->from_date,
-            'to_date' => $request->to_date,
-        ])
-            ->setPaper('a4', 'landscape');
-        return $pdf->stream('Laporan_lahan_' . $request->from_date . '-' . $request->to_date . '.pdf');
     }
 }
