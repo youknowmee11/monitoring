@@ -91,7 +91,7 @@
                 @php
                     $code_alat = $item->alat->code_alat ?? null;
                 @endphp
-                @if ($item->alat->code_alat != null)
+                @if ($code_alat != null)
                     @include('pages.admin.components.chart')
                 @endif
             @endforeach
