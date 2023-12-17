@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alat;
+use App\Models\DataLahan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -61,8 +62,15 @@ class AlatController extends Controller
     {
         try {
             $alat = Alat::find($id);
-            $alat->delete();
-            return redirect()->back()->withSuccess('Alat berhasil dihapus.');
+
+            $datalahan = DataLahan::where('code_alat', $alat->code_alat);
+            if ($datalahan) {
+
+                return redirect()->back()->withErrors('Alat telah digunakan.');
+            } else {
+                $alat->delete();
+                return redirect()->back()->withSuccess('Alat berhasil dihapus.');
+            }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
