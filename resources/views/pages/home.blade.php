@@ -88,7 +88,9 @@
     @else
         <div class="row">
             @foreach ($widget['lahan'] as $item)
-                @include('pages.admin.components.chart')
+                @if ($item->alat->code_alat != null)
+                    @include('pages.admin.components.chart')
+                @endif
             @endforeach
         </div>
     @endif
