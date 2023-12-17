@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <strong class="">Lahan {{ $item->nama_lahan }}</strong> | Status Alat
+            <strong class="">Lahan {{ $item->nama_lahan ?? 'null' }}</strong> | Status Alat
             <span class="badge badge-danger" id="status_alat">OFFLINE</span>
         </div>
         <div class="card-body">
@@ -11,8 +11,8 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <h5 class="text-primary">Data lahan :</h5>
-                    <strong>Nama Lahan :</strong> {{ $item->nama_lahan }}<br>
-                    <strong>Luas Lahan :</strong> {{ $item->luas_lahan }} Ha<br>
+                    <strong>Nama Lahan :</strong> {{ $item->nama_lahan ?? 'null' }}<br>
+                    <strong>Luas Lahan :</strong> {{ $item->luas_lahan ?? '0' }} Ha<br>
                 </div>
                 <div class="col-lg-4 col-md-6" id="pengukuranData">
                     <h5 class="text-primary">Data Pengukuran :</h5>
@@ -23,8 +23,8 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h5 class="text-primary">Data Alat :</h5>
-                    <strong>Code Alat :</strong> {{ $item->alat->code_alat }}<br>
-                    <strong>Tanggal Pembuatan :</strong> {{ $item->alat->tanggal_buat }}<br>
+                    <strong>Code Alat :</strong> {{ $item->alat->code_alat ?? 'null' }}<br>
+                    <strong>Tanggal Pembuatan :</strong> {{ $item->alat->tanggal_buat ?? 'null' }}<br>
                 </div>
             </div>
         </div>
