@@ -27,9 +27,11 @@ class JenisJagungController extends Controller
 
             $jenis_jagung = new JenisJagung();
             $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
-            $jenis_jagung->save();
-
-            return redirect()->back()->withSuccess('Alat berhasil didaftarkan.');
+            if ($jenis_jagung->save()) {
+                return redirect()->back()->withSuccess('Alat berhasil didaftarkan.');
+            } else {
+                return redirect()->back()->withErrors('Alat gagal didaftarkan.');
+            }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
@@ -42,7 +44,11 @@ class JenisJagungController extends Controller
             ]);
             $jenis_jagung = JenisJagung::find($id);
             $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
-            $jenis_jagung->save();
+            if ($jenis_jagung->save()) {
+                return redirect()->back()->withSuccess('Alat berhasil didaftarkan.');
+            } else {
+                return redirect()->back()->withErrors('Alat gagal didaftarkan.');
+            }
 
             return redirect()->back()->withSuccess('Alat berhasil diupdate.');
         } catch (QueryException $e) {

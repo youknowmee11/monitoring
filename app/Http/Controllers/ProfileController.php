@@ -52,6 +52,8 @@ class ProfileController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'nullable|string|max:255',
+                'tempat_lahir' => ['required', 'string', 'max:255'],
+                'tanggal_lahir' => ['required', 'string', 'max:255'],
                 'email' => 'required|string|email|max:255',
                 'current_password' => 'nullable|required_with:new_password',
                 'new_password' => 'nullable|min:8|max:12|required_with:current_password',
@@ -62,7 +64,8 @@ class ProfileController extends Controller
             $user = User::findOrFail(Auth::user()->id);
             $user->name = $request->input('name');
             $user->last_name = $request->input('last_name');
-
+            $user->last_name = $request->input('tempat_lahir');
+            $user->last_name = $request->input('tanggal_lahir');
             $user->email = $request->input('email');
 
             if (!is_null($request->input('current_password'))) {
@@ -73,9 +76,11 @@ class ProfileController extends Controller
                 }
             }
 
-            $user->save();
-
-            return redirect()->back()->withSuccess('Profile updated successfully.');
+            if ($user->save()) {
+                return redirect()->back()->withSuccess('Profile updated successfully.');
+            } else {
+                return redirect()->back()->withErrors('Profile updated failed.');
+            }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
@@ -98,9 +103,11 @@ class ProfileController extends Controller
             $user->password = $request->input('password');
             $user->active = 1;
             $user->role = 'admin';
-            $user->save();
-
-            return redirect()->back()->withSuccess('Profile updated successfully.');
+            if ($user->save()) {
+                return redirect()->back()->withSuccess('Profile updated successfully.');
+            } else {
+                return redirect()->back()->withErrors('Profile updated failed');
+            }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }

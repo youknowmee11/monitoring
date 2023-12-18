@@ -88,9 +88,11 @@ class DataLahanController extends Controller
             $DataLahan->id_jenis_jagung = $request->input('id_jenis_jagung');
             $DataLahan->latitude = $request->input('latitude');
             $DataLahan->longitude = $request->input('longitude');
-            $DataLahan->save();
-
-            return redirect()->back()->withSuccess('Data berhasil disimpan.');
+            if ($DataLahan->save()) {
+                return redirect()->back()->withSuccess('Data berhasil disimpan.');
+            } else {
+                return redirect()->back()->withErrors('Data gagal disimpan.');
+            }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
@@ -161,9 +163,11 @@ class DataLahanController extends Controller
             $DataLahan->id_jenis_jagung = $request->input('id_jenis_jagung');
             $DataLahan->latitude = $request->input('latitude');
             $DataLahan->longitude = $request->input('longitude');
-            $DataLahan->save();
-
-            return redirect()->back()->withSuccess('Data berhasil disimpan.');
+            if ($DataLahan->save()) {
+                return redirect()->back()->withSuccess('Data berhasil disimpan.');
+            } else {
+                return redirect()->back()->withErrors('Data gagal disimpan.');
+            }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }

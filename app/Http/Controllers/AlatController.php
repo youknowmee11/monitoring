@@ -51,9 +51,12 @@ class AlatController extends Controller
             $alat->code_alat = Str::uuid();
             $alat->tanggal_buat = $request->input('tanggal_buat');
             $alat->keterangan = $request->input('keterangan');
-            $alat->save();
 
-            return redirect()->back()->withSuccess('Alat berhasil diupdate.');
+            if ($alat->save()) {
+                return redirect()->back()->withSuccess('Alat berhasil diupdate.');
+            } else {
+                return redirect()->back()->withErrors('Gagal berhasil diupdate.');
+            }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
