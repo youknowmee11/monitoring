@@ -13,6 +13,8 @@
         "devmarketer/easynav": "^1.0",
         "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "irazasyed/telegram-bot-sdk": "^3.13",
+        "laravel-notification-channels/telegram": "^3.0",
         "laravel/framework": "^9.19",
         "laravel/legacy-factories": "^1.0",
         "laravel/tinker": "^2.8",

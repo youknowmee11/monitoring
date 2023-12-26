@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/updated-activity', 'TelegramBotController@updatedActivity');
 
 Auth::routes();
 

@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class ApiSensorController extends Controller
 {
@@ -71,6 +72,16 @@ class ApiSensorController extends Controller
                 $notif->url = '/data_lahan';
                 $notif->save();
 
+                //telegram
+                $text = "<b>Status Sensor : </b>\n"
+                    . "Nutrisi tanah seimbang\n";
+
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+
                 ob_flush();
                 flush();
             } elseif ($ph1 < 5.6 && $ph2 < 5.6) {
@@ -81,6 +92,16 @@ class ApiSensorController extends Controller
                 $notif->url = '/data_lahan';
                 $notif->save();
 
+                //telegram
+                $text = "<b>Status Sensor : </b>\n"
+                    . "Nutrisi Tanah kehilangan kalsium(ca), magnesium(mg)\n";
+
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+
                 ob_flush();
                 flush();
             } elseif ($ph1 > 6.2 && $ph2 > 6.2) {
@@ -90,6 +111,16 @@ class ApiSensorController extends Controller
                 $notif->type = 'danger';
                 $notif->url = '/data_lahan';
                 $notif->save();
+
+                //telegram
+                $text = "<b>Status Sensor : </b>\n"
+                    . "Nutrisi Tanah kehilangan fosfor (p), mangan (mn)\n";
+
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
 
                 ob_flush();
                 flush();
