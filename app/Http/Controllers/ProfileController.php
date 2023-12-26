@@ -58,6 +58,12 @@ class ProfileController extends Controller
                 'current_password' => 'nullable|required_with:new_password',
                 'new_password' => 'nullable|min:8|max:12|required_with:current_password',
                 'password_confirmation' => 'nullable|min:8|max:12|required_with:new_password|same:new_password'
+            ], [
+                'nama.required' => 'nama harus diisi',
+                'last_name.required' => 'last name harus diisi',
+                'tempat_lahir.required' => 'tempat lahir harus diisi',
+                'tanggal_lahir.required' => 'tanggal lahir harus diisi',
+                'email.required' => 'email harus diisi',
             ]);
 
 
@@ -131,8 +137,8 @@ class ProfileController extends Controller
             if (DataLahan::where('id_user', $user->id)->count() > 0) {
                 return redirect()->back()->withErrors('Tidak dapat menghapus akun dikarnakan akun ini telah memiliki lahan');
             } else {
-                return redirect()->back()->withSuccess('Akun deleted.');
                 $user->delete();
+                return redirect()->back()->withSuccess('Akun deleted.');
             }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());

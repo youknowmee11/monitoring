@@ -91,13 +91,33 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="email">Email address<span
+                                        <label class="form-control-label" for="email">Email<span
                                                 class="small text-danger">*</span></label>
                                         <input type="email" id="email" class="form-control" name="email"
                                             placeholder="example@example.com"
                                             value="{{ old('email', Auth::user()->email) }}">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="tempat_lahir">Tempat Lahir<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="text" id="tempat_lahir" class="form-control" name="tempat_lahir"
+                                            placeholder="merauke"
+                                            value="{{ old('tempat_lahir', Auth::user()->tempat_lahir) }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="tanggal_lahir">Tanggal Lahir<span
+                                                class="small text-danger">*</span></label>
+                                        <input type="date" id="tanggal_lahir" class="form-control" name="tanggal_lahir"
+                                            value="{{ old('tanggal_lahir', \Carbon\Carbon::parse(Auth::user()->Tanggal_lahir)->format('Y-m-d')) }}">
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="row">
@@ -111,8 +131,8 @@
                                 <div class="col-lg-4">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="new_password">New password</label>
-                                        <input type="password" id="new_password" class="form-control" name="new_password"
-                                            placeholder="New password">
+                                        <input type="password" id="new_password" class="form-control"
+                                            name="new_password" placeholder="New password">
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

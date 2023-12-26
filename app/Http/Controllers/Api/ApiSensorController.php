@@ -73,7 +73,9 @@ class ApiSensorController extends Controller
                 $notif->save();
 
                 //telegram
-                $text = "<b>Status Sensor : </b>\n"
+                $text = "<b>Code Alat : </b>"
+                    . $request->code_alat
+                    . "\n<b>Status Sensor : </b>\n"
                     . "Nutrisi tanah seimbang\n";
 
                 Telegram::sendMessage([
@@ -93,7 +95,9 @@ class ApiSensorController extends Controller
                 $notif->save();
 
                 //telegram
-                $text = "<b>Status Sensor : </b>\n"
+                $text = "<b>Code Alat : </b>"
+                    . $request->code_alat
+                    . "\n<b>Status Sensor : </b>\n"
                     . "Nutrisi Tanah kehilangan kalsium(ca), magnesium(mg)\n";
 
                 Telegram::sendMessage([
@@ -113,7 +117,9 @@ class ApiSensorController extends Controller
                 $notif->save();
 
                 //telegram
-                $text = "<b>Status Sensor : </b>\n"
+                $text = "<b>Code Alat : </b>"
+                    . $request->code_alat
+                    . "\n<b>Status Sensor : </b>\n"
                     . "Nutrisi Tanah kehilangan fosfor (p), mangan (mn)\n";
 
                 Telegram::sendMessage([
