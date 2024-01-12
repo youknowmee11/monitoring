@@ -152,7 +152,7 @@ class ApiSensorController extends Controller
                 $text =
                     "<b>Code Alat : </b>\n"
                     . $request->code_alat
-                    . "<b>Pemilik Alat : </b>\n"
+                    . "\n<b>Pemilik Alat : </b>\n"
                     . $user->name . " (" . $user->email . ")"
                     . "\n\n<b>Data Sensor : </b>"
                     . "\n- PH 1 = " . $ph1 . "\n" . "- PH 2 = " . $ph2
