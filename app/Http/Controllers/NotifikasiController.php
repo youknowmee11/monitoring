@@ -24,11 +24,8 @@ class NotifikasiController extends Controller
         try {
             $notif = Notifikasi::where('id_user', $id)->where('read_at', null);
             $notif->read_at = Carbon::now();
-            if ($notif->save()) {
-                return redirect()->back()->with('success', 'Notifikasi telah di baca semua');
-            } else {
-                return redirect()->back()->with('danger', 'Gagal');
-            }
+            $notif->save();
+            return redirect()->back()->with('success', 'Notifikasi telah di baca semua');
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Terjadi kesalahan: ' . $e->getMessage());
         }

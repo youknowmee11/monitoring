@@ -172,4 +172,14 @@ class DataLahanController extends Controller
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
     }
+    public function destroy($id)
+    {
+        try {
+            $DataLahan = DataLahan::find($id);
+            $DataLahan->delete();
+            return redirect()->back()->withSuccess('Lahan berhasil dihapus.');
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
+        }
+    }
 }

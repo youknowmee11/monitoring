@@ -30,12 +30,12 @@
                             <td>{{ $item->keterangan }}</td>
                             <td>
                                 @php
-                                    $cek_digunakan = App\Models\DataLahan::where('code_alat', $item->code_alat)->count();
+                                    $cek_digunakan = App\Models\DataLahan::where('code_alat', $item->code_alat);
                                 @endphp
-                                @if ($cek_digunakan == 0)
-                                    <span class="badge badge-secondary">Belum digunakan</span>
-                                @else
+                                @if ($cek_digunakan->count() != 0)
                                     <span class="badge badge-primary">digunakan</span>
+                                @else
+                                    <span class="badge badge-secondary">Belum digunakan</span>
                                 @endif
                             </td>
                             <td>

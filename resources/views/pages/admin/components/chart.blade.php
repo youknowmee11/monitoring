@@ -56,7 +56,8 @@
 
             function updateSensorData() {
                 // Menggunakan fetch untuk mendapatkan data terbaru dari API
-                fetch('https://mon-ph.mixdev.id/api/sensor')
+                // fetch('https://mon-ph.mixdev.id/api/sensor')
+                fetch("{{ url('api/sensor') }}")
                     .then(response => response.json())
                     .then(data => {
                         // Sort data berdasarkan created_at dalam urutan descending
@@ -94,7 +95,7 @@
 
             function updateChart(chartId, properties, backgroundColors, borderColors) {
                 // Menggunakan fetch untuk mendapatkan data dari API
-                fetch('https://mon-ph.mixdev.id/api/sensor')
+                fetch("{{ url('api/sensor') }}")
                     .then(response => response.json())
                     .then(data => {
                         // Filter data berdasarkan code_alat

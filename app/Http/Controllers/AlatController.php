@@ -67,8 +67,7 @@ class AlatController extends Controller
             $alat = Alat::find($id);
 
             $datalahan = DataLahan::where('code_alat', $alat->code_alat);
-            if ($datalahan) {
-
+            if ($datalahan->count() != 0) {
                 return redirect()->back()->withErrors('Alat telah digunakan.');
             } else {
                 $alat->delete();

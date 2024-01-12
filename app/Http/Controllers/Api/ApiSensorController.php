@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DataLahan;
 use App\Models\Notifikasi;
 use App\Models\Sensor;
+use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -38,6 +39,24 @@ class ApiSensorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    /**  
+     * ##Daftar keterangan PH
+     * 5,0 =  nitrogen tidak tersedia
+     * 5,0 - 5,5 = phospor dan kalium tidak tersedia
+     * 5,0 - 6,4 = Magnesium dan calsium tidak tersedia
+     * 5,1 - 5,9 = nitrogen tidak memenuhi ,
+     * 5,6 - 5,9 = Phospor tidak memenuhi
+     * 5,6 - 5,9 = Kalium tidak memenuhi
+     * 6,0 - 6,2 = nitrogen, kalium dan phosfor memenuhi penyerapan
+     * 6,5 - 8,8 = magnesium dan kalsium memenuhi penyerapan
+     * 
+     * ## Selisih pemupukan
+     * 1,0 = 18,3 Kg
+     * 1,6 = 27,8 Kg
+     * 
+     */
+
     public function store(Request $request)
     {
         try {
@@ -51,90 +70,111 @@ class ApiSensorController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
-            Sensor::create($request->all());
-
-            $ph1 = number_format($request->ph1, 1);
-            $ph2 = number_format($request->ph2, 1);
-
             $previousData = Sensor::where('code_alat', $request->code_alat)->latest()->first();
 
             $previousPh1 = number_format($previousData->ph1, 1);
             $previousPh2 = number_format($previousData->ph2, 1);
 
+            Sensor::create($request->all());
+
+            $ph1 = number_format($request->ph1, 1);
+            $ph2 = number_format($request->ph2, 1);
+            $salinitas1 = number_format($request->salinitas1, 1);
+            $salinitas2 = number_format($request->salinitas2, 1);
+
+            $selisihPh1 =  $previousPh1 - $ph1;
+            $selisihPh2 =  $previousPh2 - $ph2;
+
             $id_petani = DataLahan::where('code_alat', $request->code_alat)->first()->id_user;
 
-            // if ($ph1 != $previousPh1 || $ph2 != $previousPh2) {
-            if (($ph1 >= 5.6 && $ph2 >= 5.6) && ($ph2 <= 6.2 && $ph2 <= 6.2)) {
-                $notif = new Notifikasi();
-                $notif->id_user = $id_petani;
-                $notif->message = 'Nutrisi tanah seimbang';
-                $notif->type = 'primary';
-                $notif->url = '/data_lahan';
-                $notif->save();
+            $user = User::find($id_petani);
 
-                //telegram
-                $text = "<b>Code Alat : </b>"
-                    . $request->code_alat
-                    . "\n<b>Status Sensor : </b>\n"
-                    . "Nutrisi tanah seimbang\n";
+            //pengkondisian pemupukan
 
-                Telegram::sendMessage([
-                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
-                    'parse_mode' => 'HTML',
-                    'text' => $text
-                ]);
-
-                ob_flush();
-                flush();
-            } elseif ($ph1 < 5.6 && $ph2 < 5.6) {
-                $notif = new Notifikasi();
-                $notif->id_user = $id_petani;
-                $notif->message = 'Nutrisi Tanah kehilangan kalsium(ca), magnesium(mg)';
-                $notif->type = 'danger';
-                $notif->url = '/data_lahan';
-                $notif->save();
-
-                //telegram
-                $text = "<b>Code Alat : </b>"
-                    . $request->code_alat
-                    . "\n<b>Status Sensor : </b>\n"
-                    . "Nutrisi Tanah kehilangan kalsium(ca), magnesium(mg)\n";
-
-                Telegram::sendMessage([
-                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
-                    'parse_mode' => 'HTML',
-                    'text' => $text
-                ]);
-
-                ob_flush();
-                flush();
-            } elseif ($ph1 > 6.2 && $ph2 > 6.2) {
-                $notif = new Notifikasi();
-                $notif->id_user = $id_petani;
-                $notif->message = 'Nutrisi Tanah kehilangan fosfor (p), mangan (mn)';
-                $notif->type = 'danger';
-                $notif->url = '/data_lahan';
-                $notif->save();
-
-                //telegram
-                $text = "<b>Code Alat : </b>"
-                    . $request->code_alat
-                    . "\n<b>Status Sensor : </b>\n"
-                    . "Nutrisi Tanah kehilangan fosfor (p), mangan (mn)\n";
-
-                Telegram::sendMessage([
-                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
-                    'parse_mode' => 'HTML',
-                    'text' => $text
-                ]);
-
-                ob_flush();
-                flush();
+            if ($selisihPh1 <= 1.0 && $selisihPh2 <= 1.0) {
+                $pemupukan_json = "- Lakukan pemupukan sebanyak 18,3 Kg pupuk";
+            } elseif ($selisihPh1 <= 1.6 && $selisihPh2 <= 1.6) {
+                $pemupukan_json = "- Lakukan pemupukan sebanyak 27,3 Kg pupuk";
+            } else {
+                $pemupukan_json = "-";
             }
-            // }
+
+            //pengkondisian unsur hara
+
+            if ($ph1 == 5.0 && $ph2 == 5.0) {
+                // Nitrogen tidak tersedia
+                $keterangan = 'Nitrogen tidak tersedia';
+                $keterangan_json = '- Nitrogen tidak tersedia';
+                $type = 'danger';
+            } elseif (($ph1 >= 5.0 && $ph2 >= 5.0) && ($ph1 <= 5.5 && $ph2 <= 5.5)) {
+                // Phosfor dan kalium tidak tersedia
+                $keterangan = 'Phosfor tidak tersedia dan Kalium tidak tersedia';
+                $keterangan_json = "- Phosfor tidak tersedia \n - Kalium tidak tersedia";
+                $type = 'danger';
+            } elseif (($ph1 >= 5.0 && $ph2 >= 5.0) && ($ph1 <= 6.4 && $ph2 <= 6.4)) {
+                // Magnesium dan kalsium tidak tersedia
+                $keterangan = 'Magnesium dan kalsium tidak tersedia';
+                $keterangan_json = "Magnesium tidak tersedia \n Kalsium tidak tersedia";
+                $type = 'danger';
+            } elseif (($ph1 >= 5.1 && $ph2 >= 5.1) && ($ph1 <= 5.9 && $ph2 <= 5.9)) {
+                // Nitrogen tidak memenuhi
+                $keterangan = 'Nitrogen tidak memenuhi';
+                $keterangan_json = "- Nitrogen tidak memenuhi";
+                $type = 'warning';
+            } elseif (($ph1 >= 5.6 && $ph2 >= 5.6) && ($ph1 <= 5.9 && $ph2 <= 5.9)) {
+                // Phosfor tidak memenuhi
+                // Kalium tidak memenuhi
+                $keterangan = 'Phospor tidak memenuhi dan Kalium tidak memenuhi';
+                $keterangan_json = "- Phospor tidak memenuhi \n -Kalium tidak memenuhi";
+                $type = 'warning';
+            } elseif (($ph1 > 6.0 && $ph2 > 6.0) && ($ph1 <= 6.2 && $ph2 <= 6.2)) {
+                // Nitrogen, kalium, dan phosfor memenuhi penyerapan
+                $keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';
+                $keterangan_json = "- Nitrogen memenuhi penyerapan \n - Kalium memenuhi penyerapan \n - Phosfor memenuhi penyerapan";
+                $type = 'success';
+            } elseif (($ph1 >= 6.5 && $ph2 >= 6.5) && ($ph1 <= 8.8 && $ph2 <= 8.8)) {
+                // Magnesium dan kalsium memenuhi penyerapan
+                $keterangan = 'Magnesium dan Kalsium memenuhi penyerapan';
+                $keterangan_json = "Magnesium memenuhi penyerapan \n Kalsium memenuhi penyerapan";
+                $type = 'success';
+            } else {
+                $keterangan = 'tidak diketahui';
+                $keterangan_json = '- tidak diketahui';
+                $type = 'primary';
+            }
+            $notif = new Notifikasi();
+            $notif->id_user = $id_petani;
+            $notif->message = $keterangan;
+            $notif->type = $type;
+            $notif->url = '/data_lahan';
+            if ($notif->save()) {
+                //telegram
+                $text =
+                    "<b>Code Alat : </b>\n"
+                    . $request->code_alat
+                    . "<b>Pemilik Alat : </b>\n"
+                    . $user->name . " (" . $user->email . ")"
+                    . "\n\n<b>Data Sensor : </b>"
+                    . "\n- PH 1 = " . $ph1 . "\n" . "- PH 2 = " . $ph2
+                    . "\n- Salinitas 1 = " . $salinitas1 . "\n" . "- Salinitas 2 = " . $salinitas2
+                    . "\n\n<b>Status Tanah : </b>\n"
+                    . $keterangan_json
+                    . "\n\n<b>Saran Pemupukan : </b>\n"
+                    . $pemupukan_json
+                    . "\n\n https://mon-ph.mixdev.id";
+
+                //kirim notifikasi telegram
+                Telegram::sendMessage([
+                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+            }
 
             $response = [
                 'Success' => 'New Data Created',
+                'Telegram' => $text,
+                'Keterangan' => $keterangan
             ];
             return response()->json($response, Response::HTTP_CREATED);
         } catch (QueryException $e) {

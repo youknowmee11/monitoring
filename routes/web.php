@@ -66,4 +66,5 @@ Route::middleware('role:admin,petani')->group(function () {
     Route::get('data_lahan', [DataLahanController::class, 'index'])->name('data_lahan');
     Route::post('data_lahan/store', [DataLahanController::class, 'store'])->name('data_lahan.store');
     Route::put('data_lahan/update/{id}', [DataLahanController::class, 'update'])->name('data_lahan.update');
+    Route::delete('data_lahan/destroy/{id}', [DataLahanController::class, 'destroy'])->name('data_lahan.destroy');
 });

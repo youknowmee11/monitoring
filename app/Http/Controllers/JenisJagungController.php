@@ -64,8 +64,8 @@ class JenisJagungController extends Controller
             if (DataLahan::where('id_jenis_jagung', $JenisJagung->id)->count() > 0) {
                 return redirect()->back()->withErrors('Tidak dapat menghapus jenis jagung karena terdapat data lahan yang menggunakan jenis jagung ini.');
             } else {
-                return redirect()->back()->withSuccess('Alat berhasil dihapus.');
                 $JenisJagung->delete();
+                return redirect()->back()->withSuccess('Jagung berhasil dihapus.');
             }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());

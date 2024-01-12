@@ -16,6 +16,10 @@ class DataLahan extends Model
         return self::where('id_user', $id_petani)->first();
     }
 
+    public function petani(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
     public function jenis_jagung(): BelongsTo
     {
         return $this->belongsTo(JenisJagung::class, 'id_jenis_jagung', 'id');
