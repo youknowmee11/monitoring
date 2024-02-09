@@ -61,14 +61,20 @@
                                 <strong>TDS 2 : </strong>{{ $item->salinitas2 }}<br>
                             </td>
                             <td>
-                                @if (($ph1 >= 5.6 || $ph2 >= 5.6) && ($ph2 <= 6.2 || $ph2 <= 6.2))
-                                    <span class="text-primary">Nutrisi tanah seimbang</span>
-                                @elseif($ph1 < 5.6 && $ph2 < 5.6)
-                                    <span class="text-danger">Nutrisi Tanah kehilangan kalsium(ca), magnesium(mg)</span>
-                                @elseif($ph1 > 6.2 && $ph2 > 6.2)
-                                    <span class="text-danger">Nutrisi Tanah kehilangan fosfor (p), mangan (mn)</span>
+                                @if ($ph1 == 5.0 && $ph2 == 5.0)
+                                    <span class="text-primary">Nitrogen tidak tersedia</span>
+                                @elseif($ph1 >= 5.0 && $ph2 >= 5.0 && ($ph1 <= 5.5 && $ph2 <= 5.5))
+                                    <span class="text-primary">Phosfor tidak tersedia dan Kalium tidak tersedia</span>
+                                @elseif($ph1 >= 5.0 && $ph2 >= 5.0 && ($ph1 <= 6.4 && $ph2 <= 6.4))
+                                    <span class="text-primary">Magnesium dan kalsium tidak tersedia</span>
+                                @elseif($ph1 >= 5.1 && $ph2 >= 5.1 && ($ph1 <= 5.9 && $ph2 <= 5.9))
+                                    <span class="text-primary">Nitrogen tidak memenuhi</span>
+                                @elseif($ph1 >= 5.6 && $ph2 >= 5.6 && ($ph1 <= 5.9 && $ph2 <= 5.9))
+                                    <span class="text-primary">Phospor tidak memenuhi dan Kalium tidak memenuhi</span>
+                                @elseif($ph1 >= 6.5 && $ph2 >= 6.5 && ($ph1 <= 8.8 && $ph2 <= 8.8))
+                                    <span class="text-primary">Magnesium dan Kalsium memenuhi penyerapan</span>
                                 @else
-                                    <span class="text-danger">Terjadi kesalahan</span>
+                                    <span class="text-primary">tidak diketahui</span>
                                 @endif
                             </td>
                         </tr>
