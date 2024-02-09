@@ -11,6 +11,7 @@
             <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="id"n value="{{ $item->id }}">
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label>Nama</label>
@@ -18,7 +19,7 @@
                             value="{{ $item->name }}" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label>Nama akhir</label>
+                        <label>Nama belakang</label>
                         <input class="form-control" type="text" name="last_name" placeholder="last name"
                             value="{{ $item->last_name }}" required>
                     </div>

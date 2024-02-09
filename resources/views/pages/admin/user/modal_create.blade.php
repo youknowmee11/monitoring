@@ -15,7 +15,7 @@
                         <input class="form-control" type="text" name="name" placeholder="name" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label>Nama akhir</label>
+                        <label>Nama belakang</label>
                         <input class="form-control" type="text" name="last_name" placeholder="name" required>
                     </div>
                     <div class="form-group mb-3">

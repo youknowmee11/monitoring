@@ -28,9 +28,9 @@ class JenisJagungController extends Controller
             $jenis_jagung = new JenisJagung();
             $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
             if ($jenis_jagung->save()) {
-                return redirect()->back()->withSuccess('jagung berhasil didaftarkan.');
+                return redirect()->back()->withSuccess('data jagung berhasil didaftarkan.');
             } else {
-                return redirect()->back()->withErrors('jagung gagal didaftarkan.');
+                return redirect()->back()->withErrors('data jagung gagal didaftarkan.');
             }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
@@ -45,9 +45,9 @@ class JenisJagungController extends Controller
             $jenis_jagung = JenisJagung::find($id);
             $jenis_jagung->jenis_jagung = $request->input('jenis_jagung');
             if ($jenis_jagung->save()) {
-                return redirect()->back()->withSuccess('jagung berhasil didaftarkan.');
+                return redirect()->back()->withSuccess('data jagung berhasil update.');
             } else {
-                return redirect()->back()->withErrors('jagung gagal didaftarkan.');
+                return redirect()->back()->withErrors('data jagung gagal update.');
             }
 
             return redirect()->back()->withSuccess('jagung berhasil diupdate.');
@@ -65,7 +65,7 @@ class JenisJagungController extends Controller
                 return redirect()->back()->withErrors('Tidak dapat menghapus jenis jagung karena terdapat data lahan yang menggunakan jenis jagung ini.');
             } else {
                 $JenisJagung->delete();
-                return redirect()->back()->withSuccess('Jagung berhasil dihapus.');
+                return redirect()->back()->withSuccess('data Jagung berhasil dihapus.');
             }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());

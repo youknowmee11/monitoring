@@ -52,26 +52,26 @@ class ProfileController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'nullable|string|max:255',
-                'tempat_lahir' => ['required', 'string', 'max:255'],
-                'tanggal_lahir' => ['required', 'string', 'max:255'],
-                'email' => 'required|string|email|max:255',
+                'tempat_lahir' => ['nullable', 'string', 'max:255'],
+                'tanggal_lahir' => ['nullable', 'string', 'max:255'],
+                'email' => 'nullable|string|email|max:255',
                 'current_password' => 'nullable|required_with:new_password',
                 'new_password' => 'nullable|min:8|max:12|required_with:current_password',
                 'password_confirmation' => 'nullable|min:8|max:12|required_with:new_password|same:new_password'
             ], [
                 'nama.required' => 'nama harus diisi',
                 'last_name.required' => 'last name harus diisi',
-                'tempat_lahir.required' => 'tempat lahir harus diisi',
-                'tanggal_lahir.required' => 'tanggal lahir harus diisi',
-                'email.required' => 'email harus diisi',
             ]);
 
-
-            $user = User::findOrFail(Auth::user()->id);
+            if ($request->has('id')) {
+                $user = User::findOrFail($request->input('id'));
+            } else {
+                $user = User::findOrFail(Auth::user()->id);
+            }
             $user->name = $request->input('name');
             $user->last_name = $request->input('last_name');
-            $user->last_name = $request->input('tempat_lahir');
-            $user->last_name = $request->input('tanggal_lahir');
+            $user->tempat_lahir = $request->input('tempat_lahir');
+            $user->tanggal_lahir = $request->input('tanggal_lahir');
             $user->email = $request->input('email');
 
             if (!is_null($request->input('current_password'))) {

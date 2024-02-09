@@ -56,11 +56,11 @@ class RegisterController extends Controller
         return Validator::make(
             $data,
             [
-                'name' => ['required', 'string', 'max:255'],
-                'last_name' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'max:255'],
+                'last_name' => ['required', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'tempat_lahir' => ['required', 'string', 'max:255'],
-                'tanggal_lahir' => ['required', 'string', 'max:255'],
+                'tanggal_lahir' => ['required', 'max:255'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ],
             [
@@ -70,6 +70,7 @@ class RegisterController extends Controller
                 'tempat_lahir.required' => 'Tempat Lahir Harus diisi',
                 'tanggal_lahir.required' => 'Tanggal Lahir Harus diisi',
                 'password.required' => 'Password Harus diisi',
+                'password.min' => 'Password Harus lebih dari 8 karakter',
             ]
         );
     }
