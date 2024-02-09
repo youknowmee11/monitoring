@@ -110,9 +110,9 @@ class ProfileController extends Controller
             $user->active = 1;
             $user->role = 'admin';
             if ($user->save()) {
-                return redirect()->back()->withSuccess('Profile updated successfully.');
+                return redirect()->back()->withSuccess('akun created successfully.');
             } else {
-                return redirect()->back()->withErrors('Profile updated failed');
+                return redirect()->back()->withErrors('akun create failed');
             }
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
@@ -124,7 +124,7 @@ class ProfileController extends Controller
             $user = User::findOrFail($id);
             $user->active = $request->active;
             $user->save();
-            return redirect()->back()->withSuccess('Profile updated successfully.');
+            return redirect()->back()->withSuccess('akun validation successfully.');
         } catch (QueryException $e) {
             return redirect()->back()->withErrors('Terjadi kesalahan :' . $e->getMessage());
         }
