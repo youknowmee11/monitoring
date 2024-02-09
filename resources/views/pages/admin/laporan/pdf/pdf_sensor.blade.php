@@ -24,7 +24,7 @@
                 </td>
                 <td class="text-center" style="width: 80%">
                     LAPORAN DATA SENSOR<br>
-                    <strong> Implementasi Teknologi IoT Pada Sistem Pemantauan Kondisi pH Tanah Pada Tanaman
+                    <strong> Implementasi Teknologi IoT Pada Sistem Monitoring Kondisi pH Tanah Pada Tanaman
                         Jagung</strong>
                     <br>Tanggal {{ $from_date }} sampai {{ $to_date }}
                 </td>

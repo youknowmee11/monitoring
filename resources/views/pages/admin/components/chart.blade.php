@@ -2,24 +2,28 @@
     <div class="card">
         <div class="card-header">
             <strong class="">Lahan {{ $item->nama_lahan ?? 'null' }}</strong> | Status Alat
-            <span class="badge badge-danger" id="status_alat">OFFLINE</span>
+            <span class="badge " id="status_alat">Memeriksa status alat....</span>
         </div>
         <div class="card-body">
             <canvas id="chart1" width="100%" style="max-height: 200px;"></canvas>
             <canvas id="chart2" width="100%" style="max-height: 200px;"></canvas>
             <hr>
             <div class="row">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-2 col-md-6">
                     <h5 class="text-primary">Data lahan :</h5>
                     <strong>Nama Lahan :</strong> {{ $item->nama_lahan ?? 'null' }}<br>
                     <strong>Luas Lahan :</strong> {{ $item->luas_lahan ?? '0' }} Ha<br>
                 </div>
-                <div class="col-lg-4 col-md-6" id="pengukuranData">
+                <div class="col-lg-2 col-md-6" id="pengukuranData">
                     <h5 class="text-primary">Data Pengukuran :</h5>
-                    <strong>PH 1 :</strong> <span id="ph1"></span><br>
-                    <strong>PH 2 :</strong> <span id="ph2"></span><br>
-                    <strong>TDS 1 :</strong> <span id="salinitas1"></span><br>
-                    <strong>TDS 2 :</strong> <span id="salinitas2"></span><br>
+                    <strong>PH 1 :</strong> <span id="ph1">-</span><br>
+                    <strong>PH 2 :</strong> <span id="ph2">-</span><br>
+                    <strong>TDS 1 :</strong> <span id="salinitas1">-</span><br>
+                    <strong>TDS 2 :</strong> <span id="salinitas2">-</span><br>
+                </div>
+                <div class="col-lg-4 col-md-6" id="nutrisiTanah">
+                    <h5 class="text-primary">Status Nutrisi Tanah :</h5>
+                    <strong>Status :</strong> <span id="mutrisi">-</span>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h5 class="text-primary">Data Alat :</h5>
@@ -32,11 +36,27 @@
 </div>
 @push('script')
     <script>
+        var todayData = [];
+
+        function checkAlatStatus(todayData) {
+            var statusAlatElement = document.getElementById('status_alat');
+            if (todayData.length > 0) {
+                // Memperbarui status alat menjadi "Online" jika ada data dalam 5 menit terakhir
+                statusAlatElement.innerText = 'Online';
+                statusAlatElement.classList.remove('badge-danger');
+                statusAlatElement.classList.add('badge-success');
+            } else {
+                // Memperbarui status alat menjadi "Offline" jika tidak ada data dalam 5 menit terakhir
+                statusAlatElement.innerText = 'Offline';
+                statusAlatElement.classList.remove('badge-success');
+                statusAlatElement.classList.add('badge-danger');
+            }
+        }
         document.addEventListener('DOMContentLoaded', function() {
             var ctx1 = document.getElementById('chart1').getContext('2d');
             var ctx2 = document.getElementById('chart2').getContext('2d');
             var statusAlatElement = document.getElementById('status_alat');
-
+            var todayData = [];
             setInterval(function() {
                 updateSensorData();
                 checkAlatStatus();
@@ -56,7 +76,6 @@
 
             function updateSensorData() {
                 // Menggunakan fetch untuk mendapatkan data terbaru dari API
-                // fetch('https://mon-ph.mixdev.id/api/sensor')
                 fetch("{{ url('api/sensor') }}")
                     .then(response => response.json())
                     .then(data => {
@@ -68,7 +87,7 @@
                             '{{ $item->code_alat }}');
 
                         // Filter data hanya untuk hari ini
-                        const todayData = filterToday(filteredData);
+                        todayData = filterToday(filteredData);
 
                         // Memeriksa apakah data ada (valid)
                         if (todayData.length > 0) {
@@ -80,14 +99,61 @@
 
                             // Additional code to update the values in the #pengukuranData div
                             document.getElementById('pengukuranData').innerHTML = `
-                    <h5 class="text-primary">Data Pengukuran :</h5>
-                    <strong>PH 1 :</strong> ${todayData[0].ph1}<br>
-                    <strong>PH 2 :</strong> ${todayData[0].ph2}<br>
-                    <strong>TDS 1 :</strong> ${todayData[0].salinitas1}<br>
-                    <strong>TDS 2 :</strong> ${todayData[0].salinitas2}<br>
-                `;
+                                <h5 class="text-primary">Data Pengukuran :</h5>
+                                <strong>PH 1 :</strong> ${todayData[0].ph1}<br>
+                                <strong>PH 2 :</strong> ${todayData[0].ph2}<br>
+                                <strong>TDS 1 :</strong> ${todayData[0].salinitas1}<br>
+                                <strong>TDS 2 :</strong> ${todayData[0].salinitas2}<br>
+                            `;
+
+                            //status nutrisi tanah
+                            var keterangan = '-';
+
+                            if (todayData[0].ph1 == 5.0 && todayData[0].ph2 == 5.0) {
+                                // Nitrogen tidak tersedia
+                                keterangan = 'Nitrogen tidak tersedia';
+                            } else if ((todayData[0].ph1 >= 5.0 && todayData[0].ph2 >= 5.0) && (todayData[0]
+                                    .ph1 <= 5.5 && todayData[0].ph2 <= 5.5)) {
+                                // Phosfor dan kalium tidak tersedia
+                                keterangan = 'Phosfor tidak tersedia dan Kalium tidak tersedia';
+                            } else if ((todayData[0].ph1 >= 5.0 && todayData[0].ph2 >= 5.0) && (todayData[0]
+                                    .ph1 <= 6.4 && todayData[0].ph2 <= 6.4)) {
+                                // Magnesium dan kalsium tidak tersedia
+                                keterangan = 'Magnesium dan kalsium tidak tersedia';
+                            } else if ((todayData[0].ph1 >= 5.1 && todayData[0].ph2 >= 5.1) && (todayData[0]
+                                    .ph1 <= 5.9 && todayData[0].ph2 <= 5.9)) {
+                                // Nitrogen tidak memenuhi
+                                keterangan = 'Nitrogen tidak memenuhi';
+                            } else if ((todayData[0].ph1 >= 5.6 && todayData[0].ph2 >= 5.6) && (todayData[0]
+                                    .ph1 <= 5.9 && todayData[0].ph2 <= 5.9)) {
+                                // Phosfor tidak memenuhi Kalium tidak memenuhi
+                                keterangan = 'Phosfor tidak memenuhi dan Kalium tidak memenuhi';
+                            } else if ((todayData[0].ph1 > 6.0 && todayData[0].ph2 > 6.0) && (todayData[0]
+                                    .ph1 <= 6.2 && todayData[0].ph2 <= 6.2)) {
+                                // Nitrogen, kalium, dan phosfor memenuhi penyerapan
+                                keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';
+                            } else if ((todayData[0].ph1 >= 5.8 && todayData[0].ph2 >= 5.8) && (todayData[0]
+                                    .ph1 <= 6.8 && todayData[0].ph2 <= 6.8)) {
+                                // Contoh kondisi baru untuk ph1 = 5.8
+                                keterangan = 'Contoh keterangan baru untuk nilai ph1 = 5.8';
+                            } else if ((todayData[0].ph1 >= 6.5 && todayData[0].ph2 >= 6.5) && (todayData[0]
+                                    .ph1 <= 8.8 && todayData[0].ph2 <= 8.8)) {
+                                // Magnesium dan kalsium memenuhi penyerapan
+                                keterangan = 'Magnesium dan Kalsium memenuhi penyerapan';
+                            } else {
+                                keterangan = 'tidak diketahui';
+                            }
+
+                            document.getElementById('nutrisiTanah').innerHTML = `
+                                <h5 class="text-primary">Status Nutrisi Tanah :</h5>
+                                <strong>Status :</strong> <span id="nutrisi">${keterangan}</span>
+                            `;
+
+                            checkAlatStatus(todayData);
+
                         } else {
                             console.error('Invalid or empty data received from the server.');
+                            checkAlatStatus([]);
                         }
                     })
                     .catch(error => console.error('Error fetching data:', error));
