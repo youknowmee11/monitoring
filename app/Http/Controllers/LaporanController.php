@@ -28,6 +28,7 @@ class LaporanController extends Controller
         try {
             $sensor = Sensor::where('created_at', '>=', $request->from_date)
                 ->where('created_at', '<=', $request->to_date)
+                ->latest()
                 ->get();
 
             if ($sensor->isEmpty()) {

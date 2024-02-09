@@ -46,48 +46,61 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($data as $item)
+                @php
+                    $previousItemTime = null;
+                @endphp
+
+                @foreach ($data as $item)
                     @php
                         $lahan = App\Models\DataLahan::where('code_alat', $item->code_alat)->first();
                         $ph1 = number_format($item->ph1, 1);
                         $ph2 = number_format($item->ph2, 1);
+                        $itemTime = $item->created_at; // Waktu pembuatan data
                     @endphp
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->code_alat }}</td>
-                        <td>
-                            <strong>Lahan {{ $lahan->nama_lahan }}</strong><br>
-                            Luas : {{ $lahan->luas_lahan }} Ha
-                        </td>
-                        <td>
-                            {{ $item->created_at->format('d F Y') }}<br>
-                            Jam {{ $item->created_at->format('H:i:s') }}
-                        </td>
-                        <td>
-                            <strong>PH 1 : </strong>{{ $item->ph1 }}<br>
-                            <strong>PH 2 : </strong>{{ $item->ph2 }}<br>
-                        </td>
-                        <td>
-                            <strong>TDS 1 : </strong>{{ $item->salinitas1 }}<br>
-                            <strong>TDS 2 : </strong>{{ $item->salinitas2 }}<br>
-                        </td>
-                        <td>
-                            @if (($ph1 >= 5.6 || $ph2 >= 5.6) && ($ph2 <= 6.2 || $ph2 <= 6.2))
-                                <span class="text-primary">Nutrisi tanah seimbang</span>
-                            @elseif($ph1 < 5.6 && $ph2 < 5.6)
-                                <span class="text-danger">Nutrisi Tanah kehilangan kalsium(ca), magnesium(mg)</span>
-                            @elseif($ph1 > 6.2 && $ph2 > 6.2)
-                                <span class="text-danger">Nutrisi Tanah kehilangan fosfor (p), mangan (mn)</span>
-                            @else
-                                <span class="text-danger">Terjadi kesalahan</span>
-                            @endif
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td>Data tidak ditemukan</td>
-                    </tr>
-                @endforelse
+
+                    @if ($previousItemTime === null || $itemTime->diffInMinutes($previousItemTime) >= 5)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->code_alat }}</td>
+                            <td>
+                                <strong>Lahan {{ $lahan->nama_lahan }}</strong><br>
+                                Luas : {{ $lahan->luas_lahan }} Ha
+                            </td>
+                            <td>
+                                {{ $itemTime->format('d F Y') }}<br>
+                                Jam {{ $itemTime->format('H:i:s') }}
+                            </td>
+                            <td>
+                                <strong>PH 1 : </strong>{{ $item->ph1 }}<br>
+                                <strong>PH 2 : </strong>{{ $item->ph2 }}<br>
+                            </td>
+                            <td>
+                                <strong>TDS 1 : </strong>{{ $item->salinitas1 }}<br>
+                                <strong>TDS 2 : </strong>{{ $item->salinitas2 }}<br>
+                            </td>
+                            <td>
+                                @if ($ph1 == 5.0 && $ph2 == 5.0)
+                                    <span class="text-primary">Nitrogen tidak tersedia</span>
+                                @elseif($ph1 >= 5.0 && $ph2 >= 5.0 && ($ph1 <= 5.5 && $ph2 <= 5.5))
+                                    <span class="text-primary">Phosfor tidak tersedia dan Kalium tidak tersedia</span>
+                                @elseif($ph1 >= 5.0 && $ph2 >= 5.0 && ($ph1 <= 6.4 && $ph2 <= 6.4))
+                                    <span class="text-primary">Magnesium dan kalsium tidak tersedia</span>
+                                @elseif($ph1 >= 5.1 && $ph2 >= 5.1 && ($ph1 <= 5.9 && $ph2 <= 5.9))
+                                    <span class="text-primary">Nitrogen tidak memenuhi</span>
+                                @elseif($ph1 >= 5.6 && $ph2 >= 5.6 && ($ph1 <= 5.9 && $ph2 <= 5.9))
+                                    <span class="text-primary">Phospor tidak memenuhi dan Kalium tidak memenuhi</span>
+                                @elseif($ph1 >= 6.5 && $ph2 >= 6.5 && ($ph1 <= 8.8 && $ph2 <= 8.8))
+                                    <span class="text-primary">Magnesium dan Kalsium memenuhi penyerapan</span>
+                                @else
+                                    <span class="text-primary">tidak diketahui</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @php
+                            $previousItemTime = $itemTime;
+                        @endphp
+                    @endif
+                @endforeach
             </tbody>
         </table>
 
