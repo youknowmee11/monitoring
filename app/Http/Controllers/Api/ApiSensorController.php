@@ -72,15 +72,15 @@ class ApiSensorController extends Controller
             }
             $previousData = Sensor::where('code_alat', $request->code_alat)->latest()->first();
 
-            $previousPh1 = number_format($previousData->ph1, 1);
-            $previousPh2 = number_format($previousData->ph2, 1);
+            $previousPh1 =  number_format(floatval($previousData->ph1), 1);
+            $previousPh2 = number_format(floatval($previousData->ph2), 1);
 
             Sensor::create($request->all());
 
-            $ph1 = number_format($request->ph1, 1);
-            $ph2 = number_format($request->ph2, 1);
-            $salinitas1 = number_format($request->salinitas1, 1);
-            $salinitas2 = number_format($request->salinitas2, 1);
+            $ph1 = number_format(floatval($request->ph1), 1);
+            $ph2 = number_format(floatval($request->ph2), 1);
+            $salinitas1 = number_format(floatval($request->salinitas1), 1);
+            $salinitas2 = number_format(floatval($request->salinitas2), 1);
 
             $selisihPh1 =  $previousPh1 - $ph1;
             $selisihPh2 =  $previousPh2 - $ph2;
