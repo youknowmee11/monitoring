@@ -60,6 +60,9 @@ class ApiSensorController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->merge(['ph1' => str_replace(',', '.', $request->ph1)]);
+            $request->merge(['ph2' => str_replace(',', '.', $request->ph2)]);
+
             $validator = Validator::make($request->all(), [
                 'code_alat' => 'required',
                 'ph1' => 'required',
@@ -70,6 +73,18 @@ class ApiSensorController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
+            if (strpos($request->ph1, ',') !== false) {
+                $ph1_origin = str_replace(',', '.', $request->ph1);
+            } else {
+                $ph1_origin = $request->ph1;
+            }
+
+            if (strpos($request->ph2, ',') !== false) {
+                $ph2_origin = str_replace(',', '.', $request->ph2);
+            } else {
+                $ph2_origin = $request->ph2;
+            }
+
             $previousData = Sensor::where('code_alat', $request->code_alat)->latest()->first();
 
             $previousPh1 =  number_format(floatval($previousData->ph1), 1);
@@ -77,8 +92,8 @@ class ApiSensorController extends Controller
 
             Sensor::create($request->all());
 
-            $ph1 = number_format(floatval($request->ph1), 1);
-            $ph2 = number_format(floatval($request->ph2), 1);
+            $ph1 = number_format($ph1_origin, 1);
+            $ph2 = number_format($ph2_origin, 1);
             $salinitas1 = number_format(floatval($request->salinitas1), 1);
             $salinitas2 = number_format(floatval($request->salinitas2), 1);
 
