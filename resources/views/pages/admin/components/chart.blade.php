@@ -132,10 +132,6 @@
                                     .ph1 <= 6.2 && todayData[0].ph2 <= 6.2)) {
                                 // Nitrogen, kalium, dan phosfor memenuhi penyerapan
                                 keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';
-                            } else if ((todayData[0].ph1 >= 5.8 && todayData[0].ph2 >= 5.8) && (todayData[0]
-                                    .ph1 <= 6.8 && todayData[0].ph2 <= 6.8)) {
-                                // Contoh kondisi baru untuk ph1 = 5.8
-                                keterangan = 'Contoh keterangan baru untuk nilai ph1 = 5.8';
                             } else if ((todayData[0].ph1 >= 6.5 && todayData[0].ph2 >= 6.5) && (todayData[0]
                                     .ph1 <= 8.8 && todayData[0].ph2 <= 8.8)) {
                                 // Magnesium dan kalsium memenuhi penyerapan
