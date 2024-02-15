@@ -128,7 +128,7 @@
                                     .ph1 <= 5.9 && todayData[0].ph2 <= 5.9)) {
                                 // Phosfor tidak memenuhi Kalium tidak memenuhi
                                 keterangan = 'Phosfor tidak memenuhi dan Kalium tidak memenuhi';
-                            } else if ((todayData[0].ph1 > 6.0 && todayData[0].ph2 > 6.0) && (todayData[0]
+                            } else if ((todayData[0].ph1 >= 6.0 && todayData[0].ph2 >= 6.0) && (todayData[0]
                                     .ph1 <= 6.2 && todayData[0].ph2 <= 6.2)) {
                                 // Nitrogen, kalium, dan phosfor memenuhi penyerapan
                                 keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';

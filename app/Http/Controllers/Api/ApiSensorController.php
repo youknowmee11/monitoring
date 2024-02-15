@@ -142,7 +142,7 @@ class ApiSensorController extends Controller
                 $keterangan = 'Phospor tidak memenuhi dan Kalium tidak memenuhi';
                 $keterangan_json = "- Phospor tidak memenuhi \n -Kalium tidak memenuhi";
                 $type = 'warning';
-            } elseif (($ph1 > 6.0 && $ph2 > 6.0) && ($ph1 <= 6.2 && $ph2 <= 6.2)) {
+            } elseif (($ph1 >= 6.0 && $ph2 >= 6.0) && ($ph1 <= 6.2 && $ph2 <= 6.2)) {
                 // Nitrogen, kalium, dan phosfor memenuhi penyerapan
                 $keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';
                 $keterangan_json = "- Nitrogen memenuhi penyerapan \n - Kalium memenuhi penyerapan \n - Phosfor memenuhi penyerapan";
@@ -155,7 +155,7 @@ class ApiSensorController extends Controller
             } else {
                 $keterangan = 'tidak diketahui';
                 $keterangan_json = '- tidak diketahui';
-                $type = 'primary';
+                $type = 'warning';
             }
             $notif = new Notifikasi();
             $notif->id_user = $id_petani;
