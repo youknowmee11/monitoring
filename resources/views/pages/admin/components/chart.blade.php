@@ -129,14 +129,19 @@
                                 // Phosfor tidak memenuhi Kalium tidak memenuhi
                                 keterangan = 'Phosfor tidak memenuhi dan Kalium tidak memenuhi';
                             } else if ((todayData[0].ph1 >= 6.0 && todayData[0].ph2 >= 6.0) && (todayData[0]
-                                    .ph1 <= 6.2 && todayData[0].ph2 <= 6.2)) {
+                                    .ph1 <=
+                                    6.2 && todayData[0].ph2 <= 6.2)) {
                                 // Nitrogen, kalium, dan phosfor memenuhi penyerapan
                                 keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';
                             } else if ((todayData[0].ph1 >= 6.5 && todayData[0].ph2 >= 6.5) && (todayData[0]
                                     .ph1 <= 8.8 && todayData[0].ph2 <= 8.8)) {
-                                // Magnesium dan kalsium memenuhi penyerapan
+                                // Magnesium dan Kalsium memenuhi penyerapan
                                 keterangan = 'Magnesium dan Kalsium memenuhi penyerapan';
+                            } else if (todayData[0].ph1 > 6.0 && todayData[0].ph2 > 6.0) {
+                                // Jika pH berada di atas 6.0 tetapi tidak memenuhi kondisi lain
+                                keterangan = 'nitrogen,phospor dan kalium tersedia';
                             } else {
+                                // Kondisi default
                                 keterangan = 'tidak diketahui';
                             }
 

@@ -152,6 +152,11 @@ class ApiSensorController extends Controller
                 $keterangan = 'Magnesium dan Kalsium memenuhi penyerapan';
                 $keterangan_json = "Magnesium memenuhi penyerapan \n Kalsium memenuhi penyerapan";
                 $type = 'success';
+            } elseif ($ph1 > 6.0 && $ph2 > 6.0) {
+                // Magnesium dan Kalsium memenuhi penyerapan
+                $keterangan = 'Nitrogen,phospor dan kalium tersedia';
+                $keterangan_json = "Nitrogen,phospor dan kalium tersedia";
+                $type = 'success';
             } else {
                 $keterangan = 'tidak diketahui';
                 $keterangan_json = '- tidak diketahui';
