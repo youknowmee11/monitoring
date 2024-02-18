@@ -4,14 +4,16 @@
     @include('layouts.backend.alert')
     <div class="my-3">
         <form action="{{ route('laporan.cetak_sensor') }}" method="GET" enctype="multipart/form-data" class="form-inline">
-            <div class="mr-2">
-                <select class="form-control" name="petani">
-                    <option value="-">Semua Petani</option>
-                    @foreach ($petani as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+            @if (Auth::user()->role == 'admin')
+                <div class="mr-2">
+                    <select class="form-control" name="petani">
+                        <option value="-">Semua Petani</option>
+                        @foreach ($petani as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Tanggal </span>

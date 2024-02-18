@@ -32,13 +32,15 @@ class LaporanController extends Controller
                 ->where('created_at', '<=', $request->to_date)
                 ->latest();
 
-            if ($request->petani != '-') {
-                $lahan = DataLahan::where('id_user', $request->petani)->first();
-                $petani = User::find($request->petani);
-                if ($lahan) {
-                    $sensor = $sensor->where('code_alat', $lahan->code_alat);
-                } else {
-                    return redirect()->back()->with('danger', 'Data sensort oleh akun petani : ' . $petani->name . ' tidak tersedia');
+            if (Auth::user()->role == 'admin') {
+                if ($request->petani != '-') {
+                    $lahan = DataLahan::where('id_user', $request->petani)->first();
+                    $petani = User::find($request->petani);
+                    if ($lahan) {
+                        $sensor = $sensor->where('code_alat', $lahan->code_alat);
+                    } else {
+                        return redirect()->back()->with('danger', 'Data sensort oleh akun petani : ' . $petani->name . ' tidak tersedia');
+                    }
                 }
             }
 
