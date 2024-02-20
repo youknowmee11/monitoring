@@ -37,6 +37,7 @@
             <thead>
                 <tr>
                     <th style="width:10px;">No</th>
+                    <th>Pemilik</th>
                     <th style="width:350px;">Code Alat</th>
                     <th>Lahan</th>
                     <th>Temestamp</th>
@@ -56,11 +57,13 @@
                         $ph1 = number_format($item->ph1, 1);
                         $ph2 = number_format($item->ph2, 1);
                         $itemTime = $item->created_at; // Waktu pembuatan data
+                        $user = $lahan->petani->name;
                     @endphp
 
                     @if ($previousItemTime === null || $itemTime->diffInMinutes($previousItemTime) >= 5)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $user }}</td>
                             <td>{{ $item->code_alat }}</td>
                             <td>
                                 <strong>Lahan {{ $lahan->nama_lahan }}</strong><br>
