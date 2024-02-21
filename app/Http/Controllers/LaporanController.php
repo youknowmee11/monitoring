@@ -22,6 +22,9 @@ class LaporanController extends Controller
             'title' => 'Riwayat Data Sensor',
             'sensor' => Auth::user()->role == 'petani' ? Sensor::where('code_alat', $code_alat)->latest()->get() :  Sensor::latest()->get(),
             'petani' => User::where('role', 'petani')->latest()->get(),
+            'from_date' => null,
+            'to_date' => null,
+            'id_petani' => null
         ];
         return view('pages.admin.laporan.sensor', $data);
     }
