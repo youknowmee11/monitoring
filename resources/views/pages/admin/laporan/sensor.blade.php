@@ -9,7 +9,8 @@
                     <select class="form-control" name="petani">
                         <option value="-">Semua Petani</option>
                         @foreach ($petani as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            <option value="{{ $item->id }}" {{ $id_petani == $item->id ? 'selected' : '' }}>
+                                {{ $item->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -18,11 +19,11 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Tanggal </span>
                 </div>
-                <input type="date" class="form-control" name="from_date" value="{{ date('Y-m-d') }}">
+                <input type="date" class="form-control" name="from_date" value="{{ $from_date ?? date('Y-m-d') }}">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Sampai </span>
                 </div>
-                <input type="date" class="form-control" name="to_date" value="{{ date('Y-m-d') }}">
+                <input type="date" class="form-control" name="to_date" value="{{ $to_date ?? date('Y-m-d') }}">
             </div>
             <button type="submit" name="action" value="filter" class="btn btn-secondary mx-2"><i class="fa fa-search"></i>
                 Cari</button>

@@ -31,8 +31,7 @@ class LaporanController extends Controller
             $action = $request->input('action');
 
 
-            if ($action == 'export') {
-
+            if ($action === 'export') {
 
                 $sensor = Sensor::where('created_at', '>=', $request->from_date)
                     ->where('created_at', '<=', $request->to_date)
@@ -50,6 +49,7 @@ class LaporanController extends Controller
                 }
 
                 $data = $sensor->get();
+
                 if ($data->isEmpty()) {
                     return redirect()->back()->with('danger', 'Data tidak tersedia');
                 }
@@ -70,11 +70,16 @@ class LaporanController extends Controller
                 $sensor = Sensor::where('created_at', '>=', $request->from_date)
                     ->where('created_at', '<=', $request->to_date)
                     ->latest();
+
                 if (Auth::user()->role == 'admin') {
                     if ($request->petani != '-') {
                         $lahan = DataLahan::where('id_user', $request->petani)->first();
+                        $code_alat_admin = $lahan->code_alat ?? null;
                         $petani = User::find($request->petani);
+                        $data = $sensor->where('code_alat', $code_alat_admin);
                     }
+                } else {
+                    $data = $sensor->where('code_alat', $code_alat);
                 }
 
                 $data = $sensor->get();
@@ -83,6 +88,9 @@ class LaporanController extends Controller
                     'title' => 'Riwayat Data Sensor',
                     'sensor' => $data,
                     'petani' => User::where('role', 'petani')->latest()->get(),
+                    'from_date' => $request->from_date,
+                    'to_date' => $request->to_date,
+                    'id_petani' => $request->petani
                 ];
                 return view('pages.admin.laporan.sensor', $data);
             }
