@@ -45,7 +45,7 @@
                         <th>Lahan</th>
                         <th>Temestamp</th>
                         <th>PH</th>
-                        <th>TDS</th>
+                        {{-- <th>TDS</th> --}}
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -80,10 +80,10 @@
                                     <strong>PH 1 : </strong>{{ $item->ph1 }}<br>
                                     <strong>PH 2 : </strong>{{ $item->ph2 }}<br>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <strong>TDS 1 : </strong>{{ $item->salinitas1 }}<br>
                                     <strong>TDS 2 : </strong>{{ $item->salinitas2 }}<br>
-                                </td>
+                                </td> --}}
                                 <td>
                                     @if ($ph1 == 5.0 && $ph2 == 5.0)
                                         <span class="text-primary">Nitrogen tidak tersedia</span>
