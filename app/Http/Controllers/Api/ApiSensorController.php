@@ -106,29 +106,29 @@ class ApiSensorController extends Controller
 
             //pengkondisian pemupukan
 
-            if (($selisihPh1 == 1.0 && $selisihPh2 == 1.0) || ($selisihPh1 == -1.0 && $selisihPh2 == -1.0)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 91,5 gram pupuk";
-            } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 93 gram pupuk";
-            } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 94,7 gram pupuk";
-            } elseif (($selisihPh1 == 0.7 && $selisihPh2 == 0.7) || ($selisihPh1 == -0.7 && $selisihPh2 == -0.7)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 97,1 gram pupuk";
-            } elseif (($selisihPh1 == 0.6 && $selisihPh2 == 0.6) || ($selisihPh1 == -0.6 && $selisihPh2 == -0.6)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 100 gram pupuk";
-            } elseif (($selisihPh1 == 0.5 && $selisihPh2 == 0.5) || ($selisihPh1 == -0.5 && $selisihPh2 == -0.5)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 104 gram pupuk";
-            } elseif (($selisihPh1 == 0.4 && $selisihPh2 == 0.4) || ($selisihPh1 == -0.4 && $selisihPh2 == -0.4)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 110,6 gram pupuk";
-            } elseif (($selisihPh1 == 0.3 && $selisihPh2 == 0.3) || ($selisihPh1 == -0.3 && $selisihPh2 == -0.3)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 121 gram pupuk";
-            } elseif (($selisihPh1 == 0.2 && $selisihPh2 == 0.2) || ($selisihPh1 == -0.2 && $selisihPh2 == -0.2)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 141,25 gram pupuk";
-            } elseif (($selisihPh1 == 0.1 && $selisihPh2 == 0.1) || ($selisihPh1 == -0.1 && $selisihPh2 == -0.1)) {
-                $pemupukan_json = "- Lakukan pemupukan sebanyak 205 gram pupuk";
-            } else {
-                $pemupukan_json = "-";
-            }
+            // if (($selisihPh1 == 1.0 && $selisihPh2 == 1.0) || ($selisihPh1 == -1.0 && $selisihPh2 == -1.0)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 91,5 gram pupuk";
+            // } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 93 gram pupuk";
+            // } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 94,7 gram pupuk";
+            // } elseif (($selisihPh1 == 0.7 && $selisihPh2 == 0.7) || ($selisihPh1 == -0.7 && $selisihPh2 == -0.7)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 97,1 gram pupuk";
+            // } elseif (($selisihPh1 == 0.6 && $selisihPh2 == 0.6) || ($selisihPh1 == -0.6 && $selisihPh2 == -0.6)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 100 gram pupuk";
+            // } elseif (($selisihPh1 == 0.5 && $selisihPh2 == 0.5) || ($selisihPh1 == -0.5 && $selisihPh2 == -0.5)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 104 gram pupuk";
+            // } elseif (($selisihPh1 == 0.4 && $selisihPh2 == 0.4) || ($selisihPh1 == -0.4 && $selisihPh2 == -0.4)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 110,6 gram pupuk";
+            // } elseif (($selisihPh1 == 0.3 && $selisihPh2 == 0.3) || ($selisihPh1 == -0.3 && $selisihPh2 == -0.3)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 121 gram pupuk";
+            // } elseif (($selisihPh1 == 0.2 && $selisihPh2 == 0.2) || ($selisihPh1 == -0.2 && $selisihPh2 == -0.2)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 141,25 gram pupuk";
+            // } elseif (($selisihPh1 == 0.1 && $selisihPh2 == 0.1) || ($selisihPh1 == -0.1 && $selisihPh2 == -0.1)) {
+            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 205 gram pupuk";
+            // } else {
+            //     $pemupukan_json = "-";
+            // }
 
 
 
@@ -157,11 +157,13 @@ class ApiSensorController extends Controller
             } elseif (($ph1 >= 5.6 && $ph2 >= 5.6) && ($ph1 <= 5.9 && $ph2 <= 5.9)) {
                 // Phosfor tidak memenuhi
                 // Kalium tidak memenuhi
+                $pemupukan_json = $this->Pemupukan($selisihPh1, $selisihPh2);
                 $keterangan = 'Phospor tidak memenuhi dan Kalium tidak memenuhi';
                 $keterangan_json = "- Phospor tidak memenuhi \n -Kalium tidak memenuhi";
                 $type = 'warning';
             } elseif (($ph1 >= 6.0 && $ph2 >= 6.0) && ($ph1 <= 6.2 && $ph2 <= 6.2)) {
                 // Nitrogen, kalium, dan phosfor memenuhi penyerapan
+                $pemupukan_json = $this->Pemupukan($selisihPh1, $selisihPh2);
                 $keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';
                 $keterangan_json = "- Nitrogen memenuhi penyerapan \n - Kalium memenuhi penyerapan \n - Phosfor memenuhi penyerapan";
                 $type = 'success';
@@ -198,7 +200,7 @@ class ApiSensorController extends Controller
                     . "\n\n<b>Status Tanah : </b>\n"
                     . $keterangan_json
                     . "\n\n<b>Saran Pemupukan : </b>\n"
-                    . $pemupukan_json
+                    . $pemupukan_json ?? '-'
                     . "\n\n https://mon-ph.mixdev.id";
 
                 //kirim notifikasi telegram
@@ -222,6 +224,33 @@ class ApiSensorController extends Controller
             return response()->json($error, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
+    public function Pemupukan($selisihPh1, $selisihPh2)
+    {
+        if (($selisihPh1 == 1.0 && $selisihPh2 == 1.0) || ($selisihPh1 == -1.0 && $selisihPh2 == -1.0)) {
+            return "- Lakukan pemupukan sebanyak 91,5 gram pupuk";
+        } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
+            return "- Lakukan pemupukan sebanyak 93 gram pupuk";
+        } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
+            return "- Lakukan pemupukan sebanyak 94,7 gram pupuk";
+        } elseif (($selisihPh1 == 0.7 && $selisihPh2 == 0.7) || ($selisihPh1 == -0.7 && $selisihPh2 == -0.7)) {
+            return "- Lakukan pemupukan sebanyak 97,1 gram pupuk";
+        } elseif (($selisihPh1 == 0.6 && $selisihPh2 == 0.6) || ($selisihPh1 == -0.6 && $selisihPh2 == -0.6)) {
+            return "- Lakukan pemupukan sebanyak 100 gram pupuk";
+        } elseif (($selisihPh1 == 0.5 && $selisihPh2 == 0.5) || ($selisihPh1 == -0.5 && $selisihPh2 == -0.5)) {
+            return "- Lakukan pemupukan sebanyak 104 gram pupuk";
+        } elseif (($selisihPh1 == 0.4 && $selisihPh2 == 0.4) || ($selisihPh1 == -0.4 && $selisihPh2 == -0.4)) {
+            return "- Lakukan pemupukan sebanyak 110,6 gram pupuk";
+        } elseif (($selisihPh1 == 0.3 && $selisihPh2 == 0.3) || ($selisihPh1 == -0.3 && $selisihPh2 == -0.3)) {
+            return "- Lakukan pemupukan sebanyak 121 gram pupuk";
+        } elseif (($selisihPh1 == 0.2 && $selisihPh2 == 0.2) || ($selisihPh1 == -0.2 && $selisihPh2 == -0.2)) {
+            return "- Lakukan pemupukan sebanyak 141,25 gram pupuk";
+        } elseif (($selisihPh1 == 0.1 && $selisihPh2 == 0.1) || ($selisihPh1 == -0.1 && $selisihPh2 == -0.1)) {
+            return "- Lakukan pemupukan sebanyak 205 gram pupuk";
+        } else {
+            return "-";
+        }
+    }
+
 
     /**
      * Display the specified resource.
