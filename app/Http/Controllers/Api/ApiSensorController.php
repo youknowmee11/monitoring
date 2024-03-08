@@ -97,8 +97,8 @@ class ApiSensorController extends Controller
             $salinitas1 = number_format(floatval($request->salinitas1), 1);
             $salinitas2 = number_format(floatval($request->salinitas2), 1);
 
-            $selisihPh1 =  $previousPh1 - $ph1;
-            $selisihPh2 =  $previousPh2 - $ph2;
+            $selisihPh1 =  abs($previousPh1 - $ph1);
+            $selisihPh2 =  abs($previousPh2 - $ph2);
 
             $id_petani = DataLahan::where('code_alat', $request->code_alat)->first()->id_user;
 
