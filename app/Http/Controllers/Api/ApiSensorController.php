@@ -104,36 +104,7 @@ class ApiSensorController extends Controller
 
             $user = User::find($id_petani);
 
-            //pengkondisian pemupukan
-
-            // if (($selisihPh1 == 1.0 && $selisihPh2 == 1.0) || ($selisihPh1 == -1.0 && $selisihPh2 == -1.0)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 91,5 gram pupuk";
-            // } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 93 gram pupuk";
-            // } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 94,7 gram pupuk";
-            // } elseif (($selisihPh1 == 0.7 && $selisihPh2 == 0.7) || ($selisihPh1 == -0.7 && $selisihPh2 == -0.7)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 97,1 gram pupuk";
-            // } elseif (($selisihPh1 == 0.6 && $selisihPh2 == 0.6) || ($selisihPh1 == -0.6 && $selisihPh2 == -0.6)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 100 gram pupuk";
-            // } elseif (($selisihPh1 == 0.5 && $selisihPh2 == 0.5) || ($selisihPh1 == -0.5 && $selisihPh2 == -0.5)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 104 gram pupuk";
-            // } elseif (($selisihPh1 == 0.4 && $selisihPh2 == 0.4) || ($selisihPh1 == -0.4 && $selisihPh2 == -0.4)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 110,6 gram pupuk";
-            // } elseif (($selisihPh1 == 0.3 && $selisihPh2 == 0.3) || ($selisihPh1 == -0.3 && $selisihPh2 == -0.3)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 121 gram pupuk";
-            // } elseif (($selisihPh1 == 0.2 && $selisihPh2 == 0.2) || ($selisihPh1 == -0.2 && $selisihPh2 == -0.2)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 141,25 gram pupuk";
-            // } elseif (($selisihPh1 == 0.1 && $selisihPh2 == 0.1) || ($selisihPh1 == -0.1 && $selisihPh2 == -0.1)) {
-            //     $pemupukan_json = "- Lakukan pemupukan sebanyak 205 gram pupuk";
-            // } else {
-            //     $pemupukan_json = "-";
-            // }
-
-
-
             //pengkondisian unsur hara
-            $pemupukan_json = '';
             if ($ph1 == 5.0 && $ph2 == 5.0) {
                 // Nitrogen tidak tersedia
                 $keterangan = 'Nitrogen tidak tersedia';
@@ -180,11 +151,14 @@ class ApiSensorController extends Controller
                 $keterangan_json = '- tidak diketahui';
                 $type = 'warning';
             }
+
+            //kondisi saran pemupukan
             $pemupukan_json = ''; // Default value
             if (($ph1 < 5.6 && $ph2 < 5.6) || ($ph1 > 6.0 && $ph2 > 6.0)) {
                 // Hanya jika range pH di bawah 5.6 dan di atas 6.0, pemupukan akan diperlukan
                 $pemupukan_json = $this->Pemupukan($selisihPh1, $selisihPh2);
             }
+
             $notif = new Notifikasi();
             $notif->id_user = $id_petani;
             $notif->message = $keterangan;
