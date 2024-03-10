@@ -133,7 +133,7 @@ class ApiSensorController extends Controller
 
 
             //pengkondisian unsur hara
-            $pemupukan_json = 'Tidak memerlukan pemupukan';
+            $pemupukan_json = '';
             if ($ph1 == 5.0 && $ph2 == 5.0) {
                 // Nitrogen tidak tersedia
                 $keterangan = 'Nitrogen tidak tersedia';
@@ -157,13 +157,11 @@ class ApiSensorController extends Controller
             } elseif (($ph1 >= 5.6 && $ph2 >= 5.6) && ($ph1 <= 5.9 && $ph2 <= 5.9)) {
                 // Phosfor tidak memenuhi
                 // Kalium tidak memenuhi
-                $pemupukan_json = $this->Pemupukan($selisihPh1, $selisihPh2);
                 $keterangan = 'Phospor tidak memenuhi dan Kalium tidak memenuhi';
                 $keterangan_json = "- Phospor tidak memenuhi \n -Kalium tidak memenuhi";
                 $type = 'warning';
             } elseif (($ph1 >= 6.0 && $ph2 >= 6.0) && ($ph1 <= 6.2 && $ph2 <= 6.2)) {
                 // Nitrogen, kalium, dan phosfor memenuhi penyerapan
-                $pemupukan_json = $this->Pemupukan($selisihPh1, $selisihPh2);
                 $keterangan = 'Nitrogen, Kalium, dan Phosfor memenuhi penyerapan';
                 $keterangan_json = "- Nitrogen memenuhi penyerapan \n - Kalium memenuhi penyerapan \n - Phosfor memenuhi penyerapan";
                 $type = 'success';
@@ -181,6 +179,11 @@ class ApiSensorController extends Controller
                 $keterangan = 'tidak diketahui';
                 $keterangan_json = '- tidak diketahui';
                 $type = 'warning';
+            }
+            $pemupukan_json = ''; // Default value
+            if (($ph1 < 5.6 && $ph2 < 5.6) || ($ph1 > 6.0 && $ph2 > 6.0)) {
+                // Hanya jika range pH di bawah 5.6 dan di atas 6.0, pemupukan akan diperlukan
+                $pemupukan_json = $this->Pemupukan($selisihPh1, $selisihPh2);
             }
             $notif = new Notifikasi();
             $notif->id_user = $id_petani;
@@ -226,31 +229,35 @@ class ApiSensorController extends Controller
     }
     public function Pemupukan($selisihPh1, $selisihPh2)
     {
-        if ($selisihPh1 == 1.0 && $selisihPh2 == 1.0) {
-            return "Lakukan pemupukan sebanyak 91,5 gram pupuk";
-        } elseif ($selisihPh1 == 1.6 && $selisihPh2 == 1.6) {
-            return "Lakukan pemupukan sebanyak 93 gram pupuk";
-        } elseif ($selisihPh1 == 1.8 && $selisihPh2 == 1.8) {
-            return "Lakukan pemupukan sebanyak 94,7 gram pupuk";
-        } elseif ($selisihPh1 == 0.7 && $selisihPh2 == 0.7) {
-            return "Lakukan pemupukan sebanyak 97,1 gram pupuk";
-        } elseif ($selisihPh1 == 0.6 && $selisihPh2 == 0.6) {
-            return "Lakukan pemupukan sebanyak 100 gram pupuk";
-        } elseif ($selisihPh1 == 0.5 && $selisihPh2 == 0.5) {
-            return "Lakukan pemupukan sebanyak 104 gram pupuk";
-        } elseif ($selisihPh1 == 0.4 && $selisihPh2 == 0.4) {
-            return "Lakukan pemupukan sebanyak 110,6 gram pupuk";
-        } elseif ($selisihPh1 == 0.3 && $selisihPh2 == 0.3) {
-            return "Lakukan pemupukan sebanyak 121 gram pupuk";
-        } elseif ($selisihPh1 == 0.2 && $selisihPh2 == 0.2) {
-            return "Lakukan pemupukan sebanyak 141,25 gram pupuk";
-        } elseif ($selisihPh1 == 0.1 && $selisihPh2 == 0.1) {
-            return "Lakukan pemupukan sebanyak 205 gram pupuk";
-        } else {
-            return "Tidak diperlukan pemupukan";
-        }
-    }
+        $absoluteSelisihPh1 = abs($selisihPh1);
+        $absoluteSelisihPh2 = abs($selisihPh2);
 
+        if ($absoluteSelisihPh1 >= 0.1 || $absoluteSelisihPh2 >= 0.1) {
+            if ($absoluteSelisihPh1 == 1.0 && $absoluteSelisihPh2 == 1.0) {
+                return "Lakukan pemupukan sebanyak 91,5 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 1.6 && $absoluteSelisihPh2 == 1.6) {
+                return "Lakukan pemupukan sebanyak 93 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 1.8 && $absoluteSelisihPh2 == 1.8) {
+                return "Lakukan pemupukan sebanyak 94,7 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 0.7 && $absoluteSelisihPh2 == 0.7) {
+                return "Lakukan pemupukan sebanyak 97,1 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 0.6 && $absoluteSelisihPh2 == 0.6) {
+                return "Lakukan pemupukan sebanyak 100 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 0.5 && $absoluteSelisihPh2 == 0.5) {
+                return "Lakukan pemupukan sebanyak 104 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 0.4 && $absoluteSelisihPh2 == 0.4) {
+                return "Lakukan pemupukan sebanyak 110,6 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 0.3 && $absoluteSelisihPh2 == 0.3) {
+                return "Lakukan pemupukan sebanyak 121 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 0.2 && $absoluteSelisihPh2 == 0.2) {
+                return "Lakukan pemupukan sebanyak 141,25 gram pupuk";
+            } elseif ($absoluteSelisihPh1 == 0.1 && $absoluteSelisihPh2 == 0.1) {
+                return "Lakukan pemupukan sebanyak 205 gram pupuk";
+            }
+        }
+
+        return "Tidak diperlukan pemupukan";
+    }
 
     /**
      * Display the specified resource.
