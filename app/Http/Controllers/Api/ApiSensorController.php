@@ -97,8 +97,8 @@ class ApiSensorController extends Controller
             $salinitas1 = number_format(floatval($request->salinitas1), 1);
             $salinitas2 = number_format(floatval($request->salinitas2), 1);
 
-            $selisihPh1 =  abs($previousPh1 - $ph1);
-            $selisihPh2 =  abs($previousPh2 - $ph2);
+            $selisihPh1 =  $previousPh1 - $ph1;
+            $selisihPh2 =  $previousPh2 - $ph2;
 
             $id_petani = DataLahan::where('code_alat', $request->code_alat)->first()->id_user;
 
@@ -133,7 +133,7 @@ class ApiSensorController extends Controller
 
 
             //pengkondisian unsur hara
-            $pemupukan_json = '';
+            $pemupukan_json = 'Tidak memerlukan pemupukan';
             if ($ph1 == 5.0 && $ph2 == 5.0) {
                 // Nitrogen tidak tersedia
                 $keterangan = 'Nitrogen tidak tersedia';
@@ -196,7 +196,7 @@ class ApiSensorController extends Controller
                     . $user->name . " (" . $user->email . ")"
                     . "\n\n<b>Data Sensor : </b>"
                     . "\n- PH 1 = " . $ph1 . "\n" . "- PH 2 = " . $ph2
-                    . "\n- Salinitas 1 = " . $salinitas1 . "\n" . "- Salinitas 2 = " . $salinitas2
+                    // . "\n- Salinitas 1 = " . $salinitas1 . "\n" . "- Salinitas 2 = " . $salinitas2
                     . "\n\n<b>Status Tanah : </b>\n"
                     . $keterangan_json
                     . "\n\n<b>Saran Pemupukan : </b>\n"
@@ -226,6 +226,10 @@ class ApiSensorController extends Controller
     }
     public function Pemupukan($selisihPh1, $selisihPh2)
     {
+        // Mengatasi angka minus
+        $selisihPh1 = abs($selisihPh1);
+        $selisihPh2 = abs($selisihPh2);
+
         if (($selisihPh1 == 1.0 && $selisihPh2 == 1.0) || ($selisihPh1 == -1.0 && $selisihPh2 == -1.0)) {
             return "- Lakukan pemupukan sebanyak 91,5 gram pupuk";
         } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
@@ -250,6 +254,7 @@ class ApiSensorController extends Controller
             return "-";
         }
     }
+
 
 
     /**
