@@ -226,35 +226,30 @@ class ApiSensorController extends Controller
     }
     public function Pemupukan($selisihPh1, $selisihPh2)
     {
-        // Mengatasi angka minus
-        // $selisihPh1 = abs($selisihPh1);
-        // $selisihPh2 = abs($selisihPh2);
-
-        if (($selisihPh1 == 1.0 && $selisihPh2 == 1.0) || ($selisihPh1 == -1.0 && $selisihPh2 == -1.0)) {
-            return "- Lakukan pemupukan sebanyak 91,5 gram pupuk";
-        } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
-            return "- Lakukan pemupukan sebanyak 93 gram pupuk";
-        } elseif (($selisihPh1 == 1.6 && $selisihPh2 == 1.6) || ($selisihPh1 == -1.6 && $selisihPh2 == -1.6)) {
-            return "- Lakukan pemupukan sebanyak 94,7 gram pupuk";
-        } elseif (($selisihPh1 == 0.7 && $selisihPh2 == 0.7) || ($selisihPh1 == -0.7 && $selisihPh2 == -0.7)) {
-            return "- Lakukan pemupukan sebanyak 97,1 gram pupuk";
-        } elseif (($selisihPh1 == 0.6 && $selisihPh2 == 0.6) || ($selisihPh1 == -0.6 && $selisihPh2 == -0.6)) {
-            return "- Lakukan pemupukan sebanyak 100 gram pupuk";
-        } elseif (($selisihPh1 == 0.5 && $selisihPh2 == 0.5) || ($selisihPh1 == -0.5 && $selisihPh2 == -0.5)) {
-            return "- Lakukan pemupukan sebanyak 104 gram pupuk";
-        } elseif (($selisihPh1 == 0.4 && $selisihPh2 == 0.4) || ($selisihPh1 == -0.4 && $selisihPh2 == -0.4)) {
-            return "- Lakukan pemupukan sebanyak 110,6 gram pupuk";
-        } elseif (($selisihPh1 == 0.3 && $selisihPh2 == 0.3) || ($selisihPh1 == -0.3 && $selisihPh2 == -0.3)) {
-            return "- Lakukan pemupukan sebanyak 121 gram pupuk";
-        } elseif (($selisihPh1 == 0.2 && $selisihPh2 == 0.2) || ($selisihPh1 == -0.2 && $selisihPh2 == -0.2)) {
-            return "- Lakukan pemupukan sebanyak 141,25 gram pupuk";
-        } elseif (($selisihPh1 == 0.1 && $selisihPh2 == 0.1) || ($selisihPh1 == -0.1 && $selisihPh2 == -0.1)) {
-            return "- Lakukan pemupukan sebanyak 205 gram pupuk";
+        if ($selisihPh1 == 1.0 && $selisihPh2 == 1.0) {
+            return "Lakukan pemupukan sebanyak 91,5 gram pupuk";
+        } elseif ($selisihPh1 == 1.6 && $selisihPh2 == 1.6) {
+            return "Lakukan pemupukan sebanyak 93 gram pupuk";
+        } elseif ($selisihPh1 == 1.8 && $selisihPh2 == 1.8) {
+            return "Lakukan pemupukan sebanyak 94,7 gram pupuk";
+        } elseif ($selisihPh1 == 0.7 && $selisihPh2 == 0.7) {
+            return "Lakukan pemupukan sebanyak 97,1 gram pupuk";
+        } elseif ($selisihPh1 == 0.6 && $selisihPh2 == 0.6) {
+            return "Lakukan pemupukan sebanyak 100 gram pupuk";
+        } elseif ($selisihPh1 == 0.5 && $selisihPh2 == 0.5) {
+            return "Lakukan pemupukan sebanyak 104 gram pupuk";
+        } elseif ($selisihPh1 == 0.4 && $selisihPh2 == 0.4) {
+            return "Lakukan pemupukan sebanyak 110,6 gram pupuk";
+        } elseif ($selisihPh1 == 0.3 && $selisihPh2 == 0.3) {
+            return "Lakukan pemupukan sebanyak 121 gram pupuk";
+        } elseif ($selisihPh1 == 0.2 && $selisihPh2 == 0.2) {
+            return "Lakukan pemupukan sebanyak 141,25 gram pupuk";
+        } elseif ($selisihPh1 == 0.1 && $selisihPh2 == 0.1) {
+            return "Lakukan pemupukan sebanyak 205 gram pupuk";
         } else {
-            return "-";
+            return "Tidak diperlukan pemupukan";
         }
     }
-
 
 
     /**
