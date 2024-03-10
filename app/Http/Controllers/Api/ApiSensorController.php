@@ -133,7 +133,7 @@ class ApiSensorController extends Controller
 
 
             //pengkondisian unsur hara
-
+            $pemupukan_json = '';
             if ($ph1 == 5.0 && $ph2 == 5.0) {
                 // Nitrogen tidak tersedia
                 $keterangan = 'Nitrogen tidak tersedia';
