@@ -227,8 +227,8 @@ class ApiSensorController extends Controller
     public function Pemupukan($selisihPh1, $selisihPh2)
     {
         // Mengatasi angka minus
-        $selisihPh1 = abs($selisihPh1);
-        $selisihPh2 = abs($selisihPh2);
+        // $selisihPh1 = abs($selisihPh1);
+        // $selisihPh2 = abs($selisihPh2);
 
         if (($selisihPh1 == 1.0 && $selisihPh2 == 1.0) || ($selisihPh1 == -1.0 && $selisihPh2 == -1.0)) {
             return "- Lakukan pemupukan sebanyak 91,5 gram pupuk";
