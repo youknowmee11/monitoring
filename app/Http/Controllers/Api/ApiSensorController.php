@@ -165,27 +165,32 @@ class ApiSensorController extends Controller
             $notif->type = $type;
             $notif->url = '/data_lahan';
             if ($notif->save()) {
-                //telegram
-                $text =
-                    "<b>Code Alat : </b>\n"
-                    . $request->code_alat
-                    . "\n<b>Pemilik Alat : </b>\n"
-                    . $user->name . " (" . $user->email . ")"
-                    . "\n\n<b>Data Sensor : </b>"
-                    . "\n- PH 1 = " . $ph1 . "\n" . "- PH 2 = " . $ph2
-                    // . "\n- Salinitas 1 = " . $salinitas1 . "\n" . "- Salinitas 2 = " . $salinitas2
-                    . "\n\n<b>Status Tanah : </b>\n"
-                    . $keterangan_json
-                    . "\n\n<b>Saran Pemupukan : </b>\n"
-                    . $pemupukan_json ?? '-'
-                    . "\n\n https://mon-ph.mixdev.id";
+                if (($ph1 < 5.6 && $ph2 < 5.6) || ($ph1 > 6.0 && $ph2 > 6.0)) {
 
-                //kirim notifikasi telegram
-                Telegram::sendMessage([
-                    'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
-                    'parse_mode' => 'HTML',
-                    'text' => $text
-                ]);
+                    //telegram
+                    $text =
+                        "<b>Code Alat : </b>\n"
+                        . $request->code_alat
+                        . "\n<b>Pemilik Alat : </b>\n"
+                        . $user->name . " (" . $user->email . ")"
+                        . "\n\n<b>Data Sensor : </b>"
+                        . "\n- PH 1 = " . $ph1 . "\n" . "- PH 2 = " . $ph2
+                        // . "\n- Salinitas 1 = " . $salinitas1 . "\n" . "- Salinitas 2 = " . $salinitas2
+                        . "\n\n<b>Status Tanah : </b>\n"
+                        . $keterangan_json
+                        . "\n\n<b>Saran Pemupukan : </b>\n"
+                        . $pemupukan_json ?? '-'
+                        . "\n\n https://mon-ph.mixdev.id";
+
+                    //kirim notifikasi telegram
+                    Telegram::sendMessage([
+                        'chat_id' => env('TELEGRAM_CHANNEL_ID', ''),
+                        'parse_mode' => 'HTML',
+                        'text' => $text
+                    ]);
+                } else {
+                    $text = '-';
+                }
             }
 
             $response = [
