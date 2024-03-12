@@ -171,8 +171,8 @@ class ApiSensorController extends Controller
                     $text =
                         "<b>Code Alat : </b>\n"
                         . $request->code_alat
-                        . "\n<b>Pemilik Alat : </b>\n"
-                        . $user->name . " (" . $user->email . ")"
+                        // . "\n<b>Pemilik Alat : </b>\n"
+                        // . $user->name . " (" . $user->email . ")"
                         . "\n\n<b>Data Sensor : </b>"
                         . "\n- PH 1 = " . $ph1 . "\n" . "- PH 2 = " . $ph2
                         // . "\n- Salinitas 1 = " . $salinitas1 . "\n" . "- Salinitas 2 = " . $salinitas2
@@ -181,7 +181,7 @@ class ApiSensorController extends Controller
                         . "\n\n<b>Saran Pemupukan : </b>\n"
                         . $pemupukan_json ?? '-'
                         . "\n\n<b>Selisih PH : </b>\n"
-                        . $selisihPh1 ?? '-'
+                        . $selisihPh1
                         . "\n\n https://mon-ph.mixdev.id";
 
                     //kirim notifikasi telegram
@@ -190,8 +190,6 @@ class ApiSensorController extends Controller
                         'parse_mode' => 'HTML',
                         'text' => $text
                     ]);
-                } else {
-                    $text = '-';
                 }
             }
 
