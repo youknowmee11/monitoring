@@ -180,6 +180,8 @@ class ApiSensorController extends Controller
                         . $keterangan_json
                         . "\n\n<b>Saran Pemupukan : </b>\n"
                         . $pemupukan_json ?? '-'
+                        . "\n\n<b>Selisih PH : </b>\n"
+                        . $selisihPh1 ?? '-'
                         . "\n\n https://mon-ph.mixdev.id";
 
                     //kirim notifikasi telegram
