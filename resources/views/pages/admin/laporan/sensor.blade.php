@@ -98,7 +98,7 @@
                                     @elseif($ph1 >= 6.5 && $ph2 >= 6.5 && ($ph1 <= 8.8 && $ph2 <= 8.8))
                                         <span class="text-primary">Magnesium dan Kalsium memenuhi penyerapan</span>
                                     @else
-                                        <span class="text-primary">tidak diketahui</span>
+                                        <span class="text-primary">Phosfor tidak tersedia dan Kalium tidak tersedia</span>
                                     @endif
                                 </td>
                             </tr>
