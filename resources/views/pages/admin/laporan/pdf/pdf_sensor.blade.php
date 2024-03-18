@@ -61,7 +61,7 @@
                     @endphp
 
                     @if ($previousItemTime === null || $itemTime->diffInMinutes($previousItemTime) >= 5)
-                        <tr>
+                        <tr class="@if ($ph1 >= 5.6 && $ph2 >= 5.6 && ($ph1 <= 6.2 && $ph2 <= 6.2)) @else table-danger @endif">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $user }}</td>
                             <td>{{ $item->code_alat }}</td>
